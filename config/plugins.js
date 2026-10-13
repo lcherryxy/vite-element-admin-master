@@ -1,28 +1,18 @@
-
 import vue from '@vitejs/plugin-vue'
 import DefineOptions from 'unplugin-vue-define-options/vite'
-import legacy from '@vitejs/plugin-legacy'
 import { visualizer } from 'rollup-plugin-visualizer'
-import { viteMockServe } from 'vite-plugin-mock'
 import { svgBuilder } from '../config/svgBuilder.js'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 
-export function composePlugins(command, VITE_LEGACY) {
-  const prodMock = true
+export function composePlugins(command) {
   const lifecycle = process.env.npm_lifecycle_event
   return [
     vue(),
     DefineOptions(),
     vueJsx(),
+    // SVG 自动注册：把 src/icons/svg/ 下所有 svg 转为 symbol 注入 body
     svgBuilder('./src/icons/svg/'),
-    // https://www.npmjs.com/package/@vitejs/plugin-legacy
-    VITE_LEGACY
-      ? legacy({
-        targets: ['ie >= 11'],
-        additionalLegacyPolyfills: ['regenerator-runtime/runtime']
-      })
-      : null,
-    // https://www.npmjs.com/package/rollup-plugin-visualizer
+    // rollup-plugin-visualizer：npm run vis 时生成体积报告
     lifecycle === 'report'
       ? visualizer({
         open: true,
@@ -30,19 +20,6 @@ export function composePlugins(command, VITE_LEGACY) {
         brotliSize: true,
         filename: 'report.html'
       })
-      : null,
-
-    viteMockServe({
-      mockPath: 'mock',
-      watchFiles: true,
-      supportTs: false,
-      localEnabled: command === 'serve',
-      prodEnabled: command !== 'serve' && prodMock,
-      injectCode: `
-          import { setupProdMockServer } from './mockProdServer';
-          setupProdMockServer();
-        `,
-      logger: false
-    })
-  ]
+      : null
+  ].filter(Boolean)
 }

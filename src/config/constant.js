@@ -1,7 +1,7 @@
 export const WX_APPID = 'appid'
 export const COOKIE_PREFIX = 'vite_'
 export const TOKEN = `${COOKIE_PREFIX}_token`
-export const AVATAR = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
+export const AVATAR = 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
 
 export const GLOBAL_DATA = {
   env : 'fat',

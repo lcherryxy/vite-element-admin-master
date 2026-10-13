@@ -2,7 +2,7 @@
   <YuLayout title="Tui-Image-Editor">
     <template #head>
       图片编辑器 ImageEditor
-      <el-link type="primary" href="http://nhn.github.io/tui.image-editor/latest/" target="_blank" :underline="false">
+      <el-link type="primary" href="http://nhn.github.io/tui.image-editor/latest/" target="_blank" underline="never">
         点我查看更多
       </el-link>
     </template>

@@ -5,7 +5,7 @@
       <el-link type="primary"
 href="https://github.com/kamranahmedse/driver.js"
 target="_blank"
-:underline="false"
+underline="never"
         >driver.js</el-link
       >
     </template>

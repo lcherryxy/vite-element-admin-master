@@ -70,7 +70,7 @@
 
       <el-link
         type="primary"
-        :underline="false"
+        underline="never"
         :loading="loading"
         class=""
         style="width: 100%; margin: 15px"

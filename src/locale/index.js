@@ -4,14 +4,14 @@ import { createI18n } from 'vue-i18n'
 import messages from './getMessage'
 
 const localeData = {
-  legacy : false, // composition API
+  legacy : true, // 必须 true！Element Plus 内部依赖 legacy API 做 locale 处理
   locale : 'zh',
   globalInjection : true, // 全局模式，可以直接使用 $t
   messages
 }
 
-export const i18n = createI18n( localeData )
+export const i18n = createI18n(localeData)
 
-export function setupI18n( app ) {
-  app.use( i18n )
+export function setupI18n(app) {
+  app.use(i18n)
 }

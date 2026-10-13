@@ -5,8 +5,7 @@ export const getEnv = (envConf) => {
     VITE_PUBLIC_PATH: '',
     VITE_PROXY_DOMAIN: '',
     VITE_PROXY_DOMAIN_REAL: '',
-    VITE_ROUTER_HISTORY: '',
-    VITE_LEGACY: false
+    VITE_ROUTER_HISTORY: ''
   }
 
   for (const envName of Object.keys(envConf)) {

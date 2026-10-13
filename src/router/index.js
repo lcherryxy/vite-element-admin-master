@@ -21,7 +21,7 @@ export const constantRoutes = [
     children: [
       {
         path: '/redirect/:path(.*)',
-        name: 'Redirect',
+        name: 'RedirectPage',
         component: () => import('@/views/redirect/index.vue'),
         meta: {
           title: 'Redirect',
@@ -81,7 +81,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'dashboard',
-        name: 'Dashboard',
+        name: 'DashboardPage',
         component: () => import('@/views/dashboard/index.vue'),
         meta: {
           title: '主页',
@@ -281,7 +281,7 @@ export const asyncRoutes = [
       {
         path: 'index',
         component: () => import('@/views/animate/index.vue'),
-        name: 'Animate',
+        name: 'AnimatePage',
         meta: { title: '动画', icon: 'animate', noCache: true }
       }
     ]
@@ -322,7 +322,9 @@ export const asyncRoutes = [
 const router = createRouter({
   // Hash 模式：URL 带 #，部署到任何静态服务器都无需特殊配置
   // 刷新时服务器只返回 index.html，由前端路由接管 hash 里的路径
-  history: createWebHashHistory('./'),
+  // 注意：base 参数必须是绝对路径 '/' 或空字符串 ''，不能是 './' 相对路径
+  // 否则 Vue Router 4 会报 "No match found for location with path '/'"
+  history: createWebHashHistory(),
   // 初始化全量注册，保证 Vue Router 启动时不会报 "No match found"
   // permission.js 里会根据权限过滤后 addRoute 覆盖（同名路由会替换）
   routes: constantRoutes.concat(asyncRoutes),

@@ -41,7 +41,7 @@ function suppressCssWarnings() {
 export default defineConfig(({ command, mode }) => {
   const root = process.cwd()
   const env = getEnv(loadEnv(mode, process.cwd()))
-  const { VITE_PORT, VITE_PROXY_DOMAIN, VITE_PROXY_DOMAIN_REAL, VITE_LEGACY } = env
+  const { VITE_PORT, VITE_PROXY_DOMAIN, VITE_PROXY_DOMAIN_REAL } = env
   return {
     root,
     // dev 模式用 '/'（绝对路径，根路径能正常返回 index.html），
@@ -60,7 +60,7 @@ export default defineConfig(({ command, mode }) => {
       include: ['echarts', 'echarts-gl']
     },
 
-    plugins: [suppressCssWarnings(), ...composePlugins(command, VITE_LEGACY)],
+    plugins: [suppressCssWarnings(), ...composePlugins(command)],
 
     server: {
       host: '0.0.0.0',
@@ -79,9 +79,10 @@ export default defineConfig(({ command, mode }) => {
 
     define: {
       // https://vue-i18n.intlify.dev/guide/advanced/optimization.html#quasar-cli
-      // 消除 vue-i18n 警告
+      // 注意：legacy API 必须开启！Element Plus 2.14.x 内部依赖 vue-i18n legacy API
+      // 如果关掉会导致 el-config-provider locale 处理时出现 undefined.toUpperCase 等错误
       __VUE_I18N_FULL_INSTALL__: true,
-      __VUE_I18N_LEGACY_API__: false,
+      __VUE_I18N_LEGACY_API__: true,
       __INTLIFY_PROD_DEVTOOLS__: false,
       __APP_INFO__: JSON.stringify({
         version: '3.0.0'

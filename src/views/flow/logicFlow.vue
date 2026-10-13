@@ -2,7 +2,7 @@
   <YuLayout title="LogicFlow">
     <template #head>
       流程图组件 LogicFlow。
-      <el-link type="primary" href="http://logic-flow.org/" target="_blank" :underline="false">点我查看更多</el-link>
+      <el-link type="primary" href="http://logic-flow.org/" target="_blank" underline="never">点我查看更多</el-link>
     </template>
     <template #body>
       <div class="app-container"></div>

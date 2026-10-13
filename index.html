@@ -1,14 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <!-- Vite base: './' 相对路径部署，favicon 用相对路径 -->
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Vue Router：Hash 模式，刷新时服务器只返回 index.html，前端接管 -->
     <title>Vite Element Admin</title>
     <style>
-      /* 首屏骨架屏：在 Vue 挂载前显示，挂载后被 #app 替换掉 */
       #loader-wrapper {
         position: fixed;
         inset: 0;
@@ -51,7 +48,6 @@
         -webkit-user-select: none;
         user-select: none;
       }
-      /* Vue 挂载完成后自动隐藏骨架屏 */
       #app:not(:empty) ~ #loader-wrapper,
       body.vue-ready #loader-wrapper {
         display: none;
@@ -59,9 +55,7 @@
     </style>
   </head>
   <body>
-    <!-- Vue 3 挂载点：createApp(App).mount('#app') 会把这个 div 替换成整个应用 -->
     <div id="app"></div>
-    <!-- 首屏骨架屏：纯 CSS 实现，不依赖任何图片资源 -->
     <div id="loader-wrapper">
       <div id="loader"></div>
       <div class="loader-text">LOADING</div>
@@ -69,12 +63,19 @@
     <!-- echarts-gl 会在注册 3D 组件时 console.warn('geo3D exists')，功能正常但污染控制台 -->
     <!-- 在 Vite ESM 入口之前拦截 console.warn 过滤掉 -->
     <script>
-      (function () {
+      ;(function () {
         var _origWarn = console.warn
         var _patterns = [
-          'geo3D exists', 'geo3DView exists', 'scatter3D exists',
-          'bar3D exists', 'line3D exists', 'lines3D exists',
-          'map3D exists', 'surface exists', 'mapboxLayer exists', 'globe exists'
+          'geo3D exists',
+          'geo3DView exists',
+          'scatter3D exists',
+          'bar3D exists',
+          'line3D exists',
+          'lines3D exists',
+          'map3D exists',
+          'surface exists',
+          'mapboxLayer exists',
+          'globe exists',
         ]
         console.warn = function () {
           var msg = Array.prototype.join.call(arguments, ' ')
@@ -85,7 +86,6 @@
         }
       })()
     </script>
-    <!-- Vite 入口：type="module" 是 Vite 必需的原生 ES 模块声明 -->
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

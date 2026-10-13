@@ -5,7 +5,7 @@
       <el-link type="primary"
 href="https://www.npmjs.com/package/vue-form-create2"
 target="_blank"
-:underline="false"
+underline="never"
         >点我查看更多</el-link
       >
     </template>

@@ -5,7 +5,7 @@
         type="primary"
         href="https://lbs.amap.com/api/jsapi-v2/guide/overlays/vector-overlay"
         target="_blank"
-        :underline="false"
+        underline="never"
         >点我查看更多</el-link
       >
     </template>

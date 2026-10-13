@@ -3,7 +3,7 @@
     <template #head>
       <div class="card-title flex-row flex-vertical-center">
         <span>以下是您最近4个月的登录历史，如有异常请尽快</span>
-        <el-link type="primary" :underline="false">修改密码</el-link>
+        <el-link type="primary" underline="never">修改密码</el-link>
       </div>
     </template>
     <template #body>

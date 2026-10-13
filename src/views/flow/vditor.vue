@@ -5,7 +5,7 @@
       <el-link type="primary"
 href="https://ld246.com/article/1549638745630"
 target="_blank"
-:underline="false"
+underline="never"
         >点我查看更多</el-link
       >
     </template>

@@ -6,7 +6,7 @@
         type="primary"
         href="https://www.wangeditor.com/v5/getting-started.html"
         target="_blank"
-        :underline="false"
+        underline="never"
         >点我查看更多</el-link
       >
     </template>

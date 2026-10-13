@@ -6,7 +6,7 @@
       <el-link type="primary"
 href="https://vxetable.cn/#/table/start/install"
 target="_blank"
-:underline="false"
+underline="never"
         >点我查看更多</el-link
       >
     </template>

@@ -15,7 +15,7 @@
         </div>
         <div class="bullshit__headline">{{ message }}</div>
         <div class="bullshit__info">请检查您输入的URL是否正确，或单击下面的按钮返回主页。</div>
-        <el-link type="primary" :underline="false" @click="back" class="bullshit__return-home">返回主页</el-link>
+        <el-link type="primary" underline="never" @click="back" class="bullshit__return-home">返回主页</el-link>
       </div>
     </div>
   </div>

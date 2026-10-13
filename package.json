@@ -5,9 +5,9 @@
   "description": "vite-element-admin",
   "scripts": {
     "dev": "cross-env --max_old_space_size=4096 vite",
-    "build": "rimraf dist && cross-env vite build",
-    "build:staging": "rimraf dist && cross-env vite build --mode staging",
-    "report": "rimraf dist && cross-env vite build",
+    "build": "cross-env vite build",
+    "build:staging": "cross-env vite build --mode staging",
+    "report": "cross-env vite build",
     "vis": "set vis=true && vite build",
     "preview": "vite preview"
   },
@@ -18,22 +18,23 @@
   },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
-    "@element-plus/icons-vue": "^2.1.0",
+    "@element-plus/icons-vue": "^2.3.1",
     "@logicflow/core": "^1.2.9",
     "@logicflow/extension": "^1.2.9",
     "@mojs/core": "^1.5.1",
-    "@vueuse/core": "^10.2.0",
+    "@vueuse/core": "^12.5.0",
+    "@vxe-ui/core": "^4.4.28",
     "@wangeditor/core": "^1.1.19",
     "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-vue": "^5.1.11",
     "animate.css": "^4.1.1",
     "autoprefixer": "^10.4.14",
-    "axios": "^1.4.0",
+    "axios": "^1.8.4",
     "clipboard": "^2.0.11",
     "driver.js": "^0.9.8",
-    "echarts": "^5.4.2",
-    "echarts-gl": "^2.0.9",
-    "element-plus": "^2.3.7",
+    "echarts": "^5.5.1",
+    "echarts-gl": "^2.1.0",
+    "element-plus": "^2.10.1",
     "file-saver": "^2.0.5",
     "fuse.js": "^6.6.2",
     "js-cookie": "^3.0.5",
@@ -41,12 +42,11 @@
     "lodash-es": "^4.17.21",
     "lodash-unified": "^1.0.3",
     "mitt": "^3.0.0",
-    "mockjs": "^1.1.0",
     "nprogress": "^0.2.0",
     "ol": "^7.4.0",
-    "path": "^0.12.7",
     "path-browserify": "^1.0.1",
-    "pinia": "^2.1.4",
+    "path-to-regexp": "^8.4.2",
+    "pinia": "^3.0.3",
     "postcss": "^8.4.24",
     "qs": "^6.11.2",
     "screenfull": "^6.0.2",
@@ -55,26 +55,23 @@
     "tui-image-editor": "^3.15.3",
     "unplugin-vue-define-options": "^1.3.8",
     "vditor": "^3.9.4",
-    "vue": "^3.3.4",
+    "vue": "^3.5.13",
     "vue-form-create2": "^1.2.9",
     "vue-i18n": "^9.2.2",
-    "vue-router": "^4.2.2",
+    "vue-router": "^4.5.0",
     "vue3-lottie": "^2.7.4",
     "vxe-table": "^4.4.2",
     "xe-utils": "^3.5.11",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
-    "@vitejs/plugin-legacy": "^4.0.5",
-    "@vitejs/plugin-vue": "^4.2.3",
-    "@vitejs/plugin-vue-jsx": "^3.0.1",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "@vitejs/plugin-vue-jsx": "^4.1.1",
     "cross-env": "^7.0.3",
     "rimraf": "^5.0.1",
     "rollup-plugin-visualizer": "^5.9.2",
-    "sass": "^1.63.6",
-    "svg-sprite-loader": "^6.0.11",
-    "vite": "^4.3.9",
-    "vite-plugin-mock": "^3.0.0"
+    "sass": "^1.87.0",
+    "vite": "^6.0.7"
   },
   "homepage": "https://github.com/mvpyb/vite-element-admin",
   "keywords": [
@@ -91,6 +88,6 @@
     "not op_mini all"
   ],
   "engines": {
-    "node": ">= 16.17.0"
+    "node": ">= 18.0.0"
   }
 }

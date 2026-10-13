@@ -1,1 +1,0 @@
-import{g as e,p as r}from"../../assets/index-4a6598a6.js";function c(t){return e("/article/list",t)}function i(t){return e("/article/pv",{pv:t})}function n(t){return r("/article/create",t)}function u(t){return r("/article/update",t)}export{i as a,n as c,c as g,u};

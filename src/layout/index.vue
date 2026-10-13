@@ -122,8 +122,8 @@ onBeforeMount( () => {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/mixin.scss';
-@import '../styles/variables.module.scss';
+@use '../styles/mixin.scss' as *;
+@use '../styles/variables.module.scss' as *;
 
 .app-wrapper {
   @include clearFix;

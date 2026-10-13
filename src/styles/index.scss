@@ -1,16 +1,16 @@
-//@charset "UTF-8";
+// Sass 1.87+：@import 废弃，改用 @use（加 as * 保持原来的全局作用域）
 // 引入重置样式
-@import './reset.scss';
+@use './reset.scss' as *;
 
-@import './variables.module.scss';
-@import './mixin.scss';
-@import './transition.scss';
-//@import './element-ui.scss';
-@import './sidebar.scss';
-//@import './btn.scss';
+@use './variables.module.scss' as *;
+@use './mixin.scss' as *;
+@use './transition.scss' as *;
+//@use './element-ui.scss' as *;
+@use './sidebar.scss' as *;
+//@use './btn.scss' as *;
 
-// 对Element Ui 部分样式进行改写
-@import './element.scss';
+// 对 Element Plus 部分样式进行改写
+@use './element.scss' as *;
 
 /*ICONFONT*/
 [class*='yu-icon-'],
