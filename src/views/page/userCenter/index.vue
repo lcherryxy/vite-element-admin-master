@@ -258,7 +258,14 @@ const getHistory = async() => {
     // 模拟了10w条数据，使用element 虚拟表格渲染
     const { code, data } = await loginHistory()
     if ( code == 200 ) {
-      tableData.value = data
+      // 兼容后端多种返回结构：直接数组 / { list } / { records } / { data } / { rows }
+      tableData.value = Array.isArray( data )
+        ? data
+        : Array.isArray( data?.list ) ? data.list
+          : Array.isArray( data?.records ) ? data.records
+            : Array.isArray( data?.data ) ? data.data
+              : Array.isArray( data?.rows ) ? data.rows
+                : []
     }
   } catch ( e ) {
   } finally {

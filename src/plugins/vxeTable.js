@@ -4,11 +4,12 @@ import VXETable from 'vxe-table'
 import 'vxe-table/lib/style.css'
 
 // 全局默认参数
+// 项目统一使用 element-plus 的 v-loading 指令，不使用 vxe-table 内置的 loading（依赖未安装的 vxe-loading 组件），
+// 因此此处不配置 loadingText，避免触发"缺少 vxe-loading 组件"的告警
 VXETable.setup({
   size: 'medium',
   zIndex: 999,
   version: 0,
-  loadingText: '加载中，请稍后...',
   table: {
     autoResize: true,
     border: false,
@@ -36,7 +37,12 @@ VXETable.setup({
       rowField: 'id', parentField: 'parentId', children: 'children',
       hasChild: 'hasChild', mapChildren: '_X_ROW_CHILD', indent: 20, showIcon: true
     },
-    tooltipConfig: { enterable: true },
+    // show-overflow=true 时 tooltip-config.mode 不能用默认值 tooltip，
+    // tooltip 模式需要单独安装 vxe-pc-ui 的 VxeTooltip 组件，否则会报缺少组件错误；
+    // 改用 title 模式：超出内容显示省略号，悬停时用原生 title 属性显示完整文本，无需额外组件
+    tooltipConfig: { enterable: true, mode: 'title' },
+    headerTooltipConfig: { mode: 'title' },
+    footerTooltipConfig: { mode: 'title' },
     menuConfig: { className: 'vt-menus', visibleMethod() { } },
     editConfig: { mode: 'cell', showAsterisk: true },
     importConfig: { modes: ['insert', 'covering'] },

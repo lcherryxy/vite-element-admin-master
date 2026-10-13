@@ -40,23 +40,75 @@ const mockApis = {
   }),
   '/logout': () => ({ code: 200, data: {} }),
   '/v1/user/list': () => ({ code: 200, data: { list: [] } }),
-  '/login/history': () => ({ code: 200, data: { list: [] } }),
+  '/login/history': () => ({ code: 200, data: [] }),
+  '/article/list': (cfg) => {
+    // 生成可编辑表格的 mock 列表数据
+    const params = cfg?.params || {}
+    const page = Number(params.page) || 1
+    const limit = Number(params.limit) || 10
+    const statuses = ['published', 'draft', 'deleted']
+    const titles = [
+      'Vue3 + Vite 构建后台管理系统实践',
+      'Pinia 状态管理最佳实践',
+      'Element Plus 组件库使用指南',
+      'vxe-table 虚拟滚动性能优化',
+      'ECharts 5 数据可视化方案',
+      '前端工程化与构建优化',
+      'TypeScript 类型体操进阶',
+      '微前端架构 qiankun 实战',
+      '响应式布局与 Tailwind CSS',
+      'Node.js 服务端性能调优',
+      'Webpack 5 模块联邦原理',
+      'Vite 插件开发入门'
+    ]
+    const list = Array.from({ length: limit }, (_, i) => {
+      const idx = (page - 1) * limit + i
+      return {
+        id: idx + 1,
+        timestamp: Date.now() - idx * 86400000,
+        author: ['张三', '李四', '王五', '赵六'][idx % 4],
+        importance: (idx % 5) + 1,
+        pageviews: Math.floor(Math.random() * 9000) + 1000,
+        status: statuses[idx % 3],
+        title: titles[idx % titles.length]
+      }
+    })
+    return { code: 200, data: { items: list, total: 100 } }
+  },
+  '/article/detail': (cfg) => {
+    const id = cfg?.params?.id || 1
+    return {
+      code: 200,
+      data: {
+        id,
+        title: '文章详情标题 #' + id,
+        content: '这是文章 #' + id + ' 的详细内容。',
+        author: '张三',
+        timestamp: Date.now(),
+        status: 'published'
+      }
+    }
+  },
+  '/article/pv': (cfg) => {
+    const pv = cfg?.params?.pv || 0
+    return { code: 200, data: { pv: Number(pv) + 1 } }
+  },
   '/test': () => ({ code: 200, data: 'ok' })
 }
-function tryMock(config) {
-  if (!import.meta.env.DEV || !MOCK_ENABLED) return null
-  // 去掉 baseURL 前缀，匹配 mock key
+function setupMock(config) {
+  if (!import.meta.env.DEV || !MOCK_ENABLED) return
   const base = config.baseURL || ''
   const rawPath = config.url.replace(new RegExp('^' + base.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')), '')
   const path = rawPath.startsWith('/') ? rawPath : '/' + rawPath
   const handler = mockApis[path]
-  if (!handler) return null
-  // 返回假 response，跳过真实 HTTP 请求
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve({ data: handler(), status: 200, headers: {}, config, request: {} })
-    }, MOCK_DELAY)
-  })
+  if (!handler) return
+  config.adapter = (cfg) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({ data: handler(cfg), status: 200, statusText: 'OK', headers: {}, config: cfg, request: {} })
+      }, MOCK_DELAY)
+    })
+  }
 }
 
 // ========== 状态管理 ==========
@@ -165,8 +217,7 @@ const service = axios.create({
 // ========== Request 拦截器 ==========
 service.interceptors.request.use((config) => {
   // Dev 环境 mock 拦截（在断网检查/loading/cancel 之前，mock 请求不走真实网络）
-  const mockResponse = tryMock(config)
-  if (mockResponse) return mockResponse
+  setupMock(config)
 
   // 断网检查
   if (!navigator.onLine) {

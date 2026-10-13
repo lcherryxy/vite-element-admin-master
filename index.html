@@ -76,11 +76,24 @@
           'surface exists',
           'mapboxLayer exists',
           'globe exists',
+          // element-plus 弃用 API 告警（debugWarn -> console.warn 输出 Error 对象），
+          // 由第三方 vue-form-create2 内部模板触发（el-button type="text"、el-radio label 当值用），
+          // 无法在 node_modules 持久修补，先过滤；element-plus 3.0 前需评估升级 vue-form-create2
+          'is about to be deprecated',
         ]
         console.warn = function () {
-          var msg = Array.prototype.join.call(arguments, ' ')
-          for (var i = 0; i < _patterns.length; i++) {
-            if (msg.indexOf(_patterns[i]) !== -1) return
+          // 安全转字符串：对象用 String()，避免 join 触发 Cannot convert object to primitive value
+          var args = new Array(arguments.length)
+          for (var i = 0; i < arguments.length; i++) {
+            try {
+              args[i] = String(arguments[i])
+            } catch (e) {
+              args[i] = '[unprintable]'
+            }
+          }
+          var msg = args.join(' ')
+          for (var j = 0; j < _patterns.length; j++) {
+            if (msg.indexOf(_patterns[j]) !== -1) return
           }
           _origWarn.apply(console, arguments)
         }

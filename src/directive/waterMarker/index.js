@@ -14,7 +14,7 @@ function addWaterMarker(text, parentNode, font, textColor) {
   ctx.font = font || '16px Microsoft JhengHei'
   ctx.fillStyle = textColor || 'rgba(180, 180, 180, 0.3)'
   ctx.textAlign = 'left'
-  ctx.textBaseline = 'Middle'
+  ctx.textBaseline = 'middle'
   ctx.fillText(text, canvas.width / 10, canvas.height / 2)
   parentNode.style.backgroundImage = `url(${canvas.toDataURL('image/png')})`
 }

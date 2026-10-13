@@ -1,8 +1,8 @@
-import YuCopyright from './src/index.vue'
-export const Copyright = Object.assign( YuCopyright, {
+import YuCountTo from './src/index.vue'
+export const CountTo = Object.assign( YuCountTo, {
   install( app ) {
-    app.component( YuCopyright.name, YuCopyright )
+    app.component( YuCountTo.name, YuCountTo )
   }
 } )
 
-export default Copyright
+export default CountTo

@@ -64,7 +64,7 @@
         </el-table>
 
         <el-divider content-position="left">Vxe Table</el-divider>
-        <vxe-table round border :data="list" :loading="listLoading" ref="dragVxeTable" style="width: 100%">
+        <vxe-table round border :data="list" v-loading="listLoading" ref="dragVxeTable" style="width: 100%">
           <vxe-column align="center" field="id" title="ID" width="65" />
 
           <vxe-column align="center" field="timestamp" title="Date" width="180">

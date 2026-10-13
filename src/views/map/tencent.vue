@@ -23,7 +23,8 @@ import { tencentMap } from './utils'
 import YuLayout from '@/components/YuLayout'
 
 const container = ref()
-const ak = 'VBIBZ-VEA6U-RRXVP-4MSZS-WDNAS-YDFXM'
+// 腾讯地图 Key 统一在 .env 中管理
+const ak = import.meta.env.VITE_TENCENT_MAP_KEY
 
 // 腾讯地图 JS API 动态加载后初始化地图
 onMounted( async () => {

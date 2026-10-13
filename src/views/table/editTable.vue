@@ -53,29 +53,15 @@
 
           <el-table-column align="center" label="Actions" width="120">
             <template #default="{ row }">
-              <vxe-button
-                size="mini"
-                status="success"
-                v-if="row.edit"
-                icon="el-icon-circle-check-outline"
-                @click="confirmEdit(row)"
-                >Ok</vxe-button
-              >
+              <el-button size="small" type="success" v-if="row.edit" @click="confirmEdit(row)">Ok</el-button>
 
-              <vxe-button
-                size="mini"
-                status="primary"
-                v-else
-                icon="el-icon-circle-check-outline"
-                @click="row.edit = !row.edit"
-                >Edit</vxe-button
-              >
+              <el-button size="small" type="primary" v-else @click="row.edit = !row.edit">Edit</el-button>
             </template>
           </el-table-column>
         </el-table>
 
         <el-divider content-position="left">Vxe Table</el-divider>
-        <vxe-table round border :data="list" :loading="listLoading" style="width: 100%">
+        <vxe-table round border :data="list" v-loading="listLoading" style="width: 100%">
           <vxe-column align="center" field="id" title="ID" width="65" />
 
           <vxe-column align="center" field="timestamp" title="Date" width="180px">
@@ -116,23 +102,9 @@
 
           <vxe-column align="center" title="Actions" width="120">
             <template #default="{ row }">
-              <vxe-button
-                size="mini"
-                status="success"
-                v-if="row.edit"
-                icon="el-icon-circle-check-outline"
-                @click="confirmEdit(row)"
-                >Ok</vxe-button
-              >
+              <el-button size="small" type="success" v-if="row.edit" @click="confirmEdit(row)">Ok</el-button>
 
-              <vxe-button
-                size="mini"
-                status="primary"
-                v-else
-                icon="el-icon-circle-check-outline"
-                @click="row.edit = !row.edit"
-                >Edit</vxe-button
-              >
+              <el-button size="small" type="primary" v-else @click="row.edit = !row.edit">Edit</el-button>
             </template>
           </vxe-column>
         </vxe-table>
@@ -149,66 +121,76 @@ import YuLayout from '@/components/YuLayout'
 // Element Plus：表格操作成功/失败用 ElMessage 提示
 import { ElMessage } from 'element-plus'
 
-const list = ref( null )
-const listLoading = ref( true )
-const listQuery = reactive( {
-  page : 1,
-  limit : 10
-} )
+const list = ref(null)
+const listLoading = ref(true)
+const listQuery = reactive({
+  page: 1,
+  limit: 10
+})
 
 const statusFilter = status => {
   const statusMap = {
-    published : 'success',
-    draft : 'info',
-    deleted : 'danger'
+    published: 'success',
+    draft: 'info',
+    deleted: 'danger'
   }
   return statusMap[status]
 }
 
-const getList = async() => {
+const getList = async () => {
   listLoading.value = true
-  const { data } = await getArticle( listQuery )
-  const items = data.items
-
-  list.value = items.map( v => {
-    return {
+  try {
+    const { data } = await getArticle(listQuery)
+    // 兼容后端多种返回结构：{ items } / { list } / { records } / { rows } / 直接数组
+    const items = Array.isArray(data) ? data
+      : Array.isArray(data?.items) ? data.items
+        : Array.isArray(data?.list) ? data.list
+          : Array.isArray(data?.records) ? data.records
+            : Array.isArray(data?.rows) ? data.rows
+              : []
+    list.value = items.map(v => ({
       ...v,
-      edit : false,
-      originalTitle : v.title
-    }
-  } )
-  listLoading.value = false
+      edit: false,
+      originalTitle: v.title
+    }))
+  } catch (e) {
+    list.value = []
+    ElMessage({ message: '获取列表失败', type: 'error' })
+  } finally {
+    listLoading.value = false
+  }
 }
 
 const cancelEdit = row => {
   row.title = row.originalTitle
   row.edit = false
-  ElMessage( {
-    message : 'The title has been restored to the original value',
-    type : 'warning'
-  } )
+  ElMessage({
+    message: 'The title has been restored to the original value',
+    type: 'warning'
+  })
 }
 
 const confirmEdit = row => {
   row.edit = false
   row.originalTitle = row.title
-  ElMessage( {
-    message : 'The title has been edited',
-    type : 'success'
-  } )
+  ElMessage({
+    message: 'The title has been edited',
+    type: 'success'
+  })
 }
 
 getList()
 
-defineOptions( {
-  name : 'EditTable'
-} )
+defineOptions({
+  name: 'EditTable'
+})
 </script>
 
 <style scoped>
 .edit-input {
   padding-right: 100px;
 }
+
 .cancel-btn {
   position: absolute;
   right: 15px;

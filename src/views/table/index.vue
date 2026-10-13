@@ -13,7 +13,7 @@ underline="never"
 
     <template #body>
       <div>
-        <vxe-button status="primary" v-wave content="主要颜色" />
+        <el-button type="primary" v-wave>主要颜色</el-button>
         <vxe-table border :column-config="{ resizable: true }" :tree-config="{ transform: true }" :data="tableData">
           <vxe-column field="name" title="Name" tree-node></vxe-column>
           <vxe-column type="expand" title="Details" width="80">

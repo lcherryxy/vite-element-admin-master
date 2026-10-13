@@ -67,6 +67,13 @@ export default defineConfig(({ command, mode }) => {
       port: VITE_PORT || 9527,
       https: false,
       open: false,
+      // Chrome 已默认弃用 unload 事件，TinyMCE 内部注册的 unload 监听会刷
+      // [Violation] Permissions policy violation: unload is not allowed in this document
+      // 通过官方豁免头重新允许 unload（编辑器 iframe 同源，自动继承此策略）
+      // 生产环境需在部署服务器（如 nginx）加同样的响应头
+      headers: {
+        'Permissions-Policy': 'unload=*'
+      },
       proxy: {
         [VITE_PROXY_DOMAIN]: {
           target: VITE_PROXY_DOMAIN_REAL,

@@ -118,15 +118,6 @@ const submit = async formEl => {
     } )
 }
 
-const getHistory = async() => {
-  // 模拟了10w条数据，使用 element 虚拟表格渲染
-  // const { code, data } = await loginHistory()
-  // if ( code == 200 ) {
-  //   tableData.value = data
-  // }
-}
-getHistory()
-
 defineOptions( {
   name : 'Attestation'
 } )

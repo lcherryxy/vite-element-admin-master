@@ -24,7 +24,8 @@ import { baiduMap } from './utils'
 import YuLayout from '@/components/YuLayout'
 
 const container = ref()
-const ak = 'ov7zC5g8Ac0ScLPp1zG8TZDuiGfty9Hh'
+// 百度地图 Key 统一在 .env 中管理
+const ak = import.meta.env.VITE_BAIDU_MAP_KEY
 
 // 百度地图 JS API 动态加载后初始化地图
 onMounted( async () => {

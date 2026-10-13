@@ -11,7 +11,6 @@ import './styles/index.scss'
 import './assets/fonts/index.css'
 import 'element-plus/dist/index.css'
 import './assets/iconfont/iconfont.css'
-import globalEmitter from '@/utils/mitt'
 import registerDirective from '@/directive'
 import { setupI18n } from '@/locale'
 import { setupElementIcons } from '@/plugins/elementIcons'
@@ -32,7 +31,6 @@ const initApp = async () => {
   await router.isReady()
   setupI18n(app)
   setupElementIcons(app)
-  app.config.globalProperties.$mitt = globalEmitter
   app.use(ElementPlus)
   app.use(useTable)
   app.mount('#app')

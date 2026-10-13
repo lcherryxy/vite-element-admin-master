@@ -11,6 +11,23 @@
     </template>
     <template #body>
       <div class="section-container">
+        <el-alert
+          v-if="loadFailed"
+          :title="failMsg"
+          type="error"
+          show-icon
+          :closable="false"
+          class="map-tip"
+        >
+          <template #default>
+            <span>
+              高德地图 Key 已失效或未配置，请在
+              <code>.env.development</code> / <code>.env.production</code> 中将
+              <code>VITE_AMAP_KEY</code> 替换为你自己的有效 Key。
+              <a href="https://lbs.amap.com/dev/key/app" target="_blank" rel="noopener">前往申请 →</a>
+            </span>
+          </template>
+        </el-alert>
         <div id="container" ref="container"></div>
       </div>
     </template>
@@ -23,7 +40,10 @@ import AMapLoader from '@amap/amap-jsapi-loader'
 import YuLayout from '@/components/YuLayout'
 
 const container = ref()
-const ak = '5dc1bd09758a3d8eaafa4a8e5800e29c'
+const loadFailed = ref(false)
+const failMsg = ref('')
+// 高德地图 Key 统一在 .env 中管理
+const ak = import.meta.env.VITE_AMAP_KEY
 const options = {
   key : ak,
   version : '2.0',
@@ -68,6 +88,9 @@ onMounted( async () => {
     await addMark( map )
     await customMark( map )
   } catch ( e ) {
+    // Key 失效（USER_KEY_RECYCLED / INVALID_USER_KEY 等）时给出友好提示，而不是只打 console
+    loadFailed.value = true
+    failMsg.value = e?.info || e?.message || '地图加载失败'
     console.error( '高德地图加载失败', e )
   }
 } )
@@ -77,6 +100,9 @@ onMounted( async () => {
 .info {
   height: 30px;
   line-height: 30px;
+}
+.map-tip {
+  margin-bottom: 12px;
 }
 #container {
   width: 100vw;
