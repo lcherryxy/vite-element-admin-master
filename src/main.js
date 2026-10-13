@@ -18,7 +18,6 @@ import { useTable } from '@/plugins/vxeTable'
 
 import Vue3Lottie from 'vue3-lottie'
 import 'vue3-lottie/dist/style.css'
-import 'echarts-gl'
 
 const app = createApp(App)
 

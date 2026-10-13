@@ -93,7 +93,16 @@ const mockApis = {
     const pv = cfg?.params?.pv || 0
     return { code: 200, data: { pv: Number(pv) + 1 } }
   },
+  '/article/create': (cfg) => {
+    const data = cfg?.data || {}
+    return { code: 200, data: { id: Date.now(), ...data } }
+  },
+  '/article/update': (cfg) => {
+    const data = cfg?.data || {}
+    return { code: 200, data: { ...data } }
+  },
   '/test': () => ({ code: 200, data: 'ok' })
+  
 }
 function setupMock(config) {
   if (!import.meta.env.DEV || !MOCK_ENABLED) return
