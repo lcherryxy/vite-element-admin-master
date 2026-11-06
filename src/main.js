@@ -16,13 +16,9 @@ import { setupI18n } from '@/locale'
 import { setupElementIcons } from '@/plugins/elementIcons'
 import { useTable } from '@/plugins/vxeTable'
 
-import Vue3Lottie from 'vue3-lottie'
-import 'vue3-lottie/dist/style.css'
-
 const app = createApp(App)
 
 const initApp = async () => {
-  app.use(Vue3Lottie)
   app.use(router)
   useSvgIcon(app)
   registerStore(app)

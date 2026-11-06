@@ -17,49 +17,48 @@
     <span>
       see More : https://github.com/airbnb/lottie-web?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library
     </span>
-    <Vue3Lottie
-      :animationData="lottieOptions.animationData"
-      :height="lottieOptions.height"
-      :width="lottieOptions.width"
-    />
+    <Vue3Lottie :animationData="lottieOptions.animationData" :height="lottieOptions.height"
+      :width="lottieOptions.width" />
   </div>
 </template>
 
 <script setup>
+import { Vue3Lottie } from 'vue3-lottie'
+import 'vue3-lottie/dist/style.css'
 import { ref, onMounted } from 'vue'
 import MoJs from '@mojs/core'
 import DogJSON from './lottie/dogJson.json'
 
-defineOptions( {
-  name : 'AnimateCom'
-} )
+defineOptions({
+  name: 'AnimateCom'
+})
 
 // new MoJs.Timeline()
-const heart = ref( null )
-const logo = ref( null )
+const heart = ref(null)
+const logo = ref(null)
 
 let burst
 
-onMounted( () => {
-  burst = new MoJs.Burst( {
+onMounted(() => {
+  burst = new MoJs.Burst({
     // 爆炸范围
-    radius : { 0 : 50 },
+    radius: { 0: 50 },
     // 动画挂载父元素，默认改在到body上
-    parent : heart.value,
+    parent: heart.value,
     // 动画延时函数
-    easing : MoJs.easing.bezier( 0.1, 1, 0.3, 1 ),
+    easing: MoJs.easing.bezier(0.1, 1, 0.3, 1),
     // 动画延时时间
-    duration : 1500,
+    duration: 1500,
     // 动画等待时间
-    delay : 300,
+    delay: 300,
     // 扩散的粒子配置
-    children : {
-      duration : 750,
+    children: {
+      duration: 750,
       // 随机数范围爆炸
-      radius : { 0 : 'rand(5,25)' },
-      shape : ['circle', 'rect', 'polygon'],
+      radius: { 0: 'rand(5,25)' },
+      shape: ['circle', 'rect', 'polygon'],
       // 粒子可选色
-      fill : [
+      fill: [
         '#1abc9c',
         '#2ecc71',
         '#00cec9',
@@ -71,15 +70,15 @@ onMounted( () => {
         '#e74c3c',
         '#e84393'
       ],
-      degreeShift : 'rand(-90, 90)',
-      delay : 'stagger(0, 40)'
+      degreeShift: 'rand(-90, 90)',
+      delay: 'stagger(0, 40)'
     },
     // 透明度
-    opacity : 0.6,
+    opacity: 0.6,
     // 生成粒子数量
-    count : 10
-  } )
-} )
+    count: 10
+  })
+})
 
 // const mo1 = () => {
 //   const COLORS = {
@@ -390,7 +389,7 @@ onMounted( () => {
 // }
 
 const startMo = () => {
-  new MoJs.Timeline().add( burst ).play()
+  new MoJs.Timeline().add(burst).play()
 
   // const spinner = new MoJs.Shape( {
   //   parent : heart.value,
@@ -421,10 +420,10 @@ const startMo = () => {
 }
 
 const lottieOptions = {
-  animationData : DogJSON,
-  height : 200,
-  width : 200,
-  loop : true
+  animationData: DogJSON,
+  height: 200,
+  width: 200,
+  loop: true
 }
 </script>
 
@@ -434,6 +433,7 @@ const lottieOptions = {
   width: 100%;
   height: 500px;
 }
+
 .logo {
   position: absolute;
   left: 50%;
