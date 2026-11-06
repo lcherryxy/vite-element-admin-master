@@ -40,10 +40,10 @@ import { localStorageHandle } from '@/utils/storage'
 
 const TODO_LIST_KEY = 'todos'
 const defaultTodo = [
-  { text : 'star this repository', done : false },
-  { text : 'fork this repository', done : false },
-  { text : 'follow author', done : false },
-  { text : 'element-plus-vite-admin', done : true },
+  { text : '整理本周选题', done : false },
+  { text : '撰写待发布文章', done : false },
+  { text : '审核稿件', done : false },
+  { text : '优化文章标题', done : true },
   { text : 'vite', done : true },
   { text : 'vue', done : true },
   { text : 'Pinia', done : true },

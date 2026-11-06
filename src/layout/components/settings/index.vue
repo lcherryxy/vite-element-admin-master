@@ -65,7 +65,7 @@
         <div style="flex: auto">
           <el-alert type="success">
             <template #title>
-              <el-link type="primary" href="https://github.com/mvpyb/vite-element-admin">点我前往github</el-link>
+              <span>内容工坊 · ContentStudio</span>
             </template>
           </el-alert>
         </div>

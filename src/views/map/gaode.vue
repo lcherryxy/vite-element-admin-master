@@ -21,9 +21,8 @@
         >
           <template #default>
             <span>
-              高德地图 Key 已失效或未配置，请在
-              <code>.env.development</code> / <code>.env.production</code> 中将
-              <code>VITE_AMAP_KEY</code> 替换为你自己的有效 Key。
+              高德地图 Key 已失效或未配置，请在 <code>.env.local</code> 中配置
+              <code>VITE_AMAP_KEY</code> 与 <code>VITE_AMAP_SECURITY_CODE</code>，或在部署环境中注入同名变量。
               <a href="https://lbs.amap.com/dev/key/app" target="_blank" rel="noopener">前往申请 →</a>
             </span>
           </template>

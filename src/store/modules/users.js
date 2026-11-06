@@ -16,9 +16,9 @@ const useUserStore = defineStore('users', {
     token: getCookie(TOKEN),
     uid: '9527',
     avatar: AVATAR,
-    name: '灰是小灰灰的灰',
+    name: '内容工坊用户',
     phone: '15988888888',
-    email: '454539387@qq.com',
+    email: 'admin@contentstudio.local',
     identity: '',
     roles: []
   }),

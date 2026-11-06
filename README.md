@@ -1,138 +1,112 @@
+# 内容工坊（ContentStudio）
 
-## 简介
+## 一、项目简介
 
-Vite Element Admin 是一个免费开源的中后台模版(Js 版本)。使用了最新的`vue3`,`vite2`,`pinia`等主流技术开发，开箱即用的中后台前端解决方案，也可用于学习参考。该模板功能和JS版本保持一致
+内容工坊是一个面向内容团队的文章生产与运营平台，覆盖内容创作、素材处理、数据看板与账号管理，帮助内容团队把「选题 — 撰写 — 编辑 — 发布」的流程放进同一套后台。
 
-## 特性
+项目基于 Vue 3 组合式 API 与 Pinia 开发，UI 采用 Element Plus，构建工具为 Vite。
 
-- **最新技术栈**：使用 Vue3/vite2 等前端前沿技术开发
-- **Mock 数据** 内置 Mock 数据方案
-- **权限** 内置完善的动态路由权限生成方案
-- **组件** 二次封装了多个常用的组件
-- **vuex版本** 可以下载2.x版本
+## 二、技术栈
 
-## 预览
+| 技术 | 版本 | 说明 |
+| --- | --- | --- |
+| Vue | 3.5.44 | 组合式 API（`<script setup>`） |
+| Vite | 6.4.4 | 开发服务器与生产构建 |
+| Pinia | 3.0.4 | 全局状态管理 |
+| Vue Router | 4.6.4 | Hash 模式，动态路由权限 |
+| Element Plus | 2.14.7 | UI 组件库 |
+| @element-plus/icons-vue | 2.3.2 | 通用交互图标 |
+| Sass | 1.105.1 | 样式预处理（`@use` 语法） |
+| ECharts | 5.5.1 | 图表与 3D 可视化 |
+| vxe-table | 4.4.2 | 高性能表格 |
 
-- [在线预览 - 码云](https://simmon_page.gitee.io/vite-element-admin/dist/)
-- [在线预览 - GitHub](https://mvpyb.github.io/vite-element-admin/dist/)
+> 版本以当前 `node_modules` 实际安装为准，升级依赖后请同步更新本表。
 
-- [github](https://github.com/mvpyb/vite-element-admin) - 完整版github站点
-- [码云](https://gitee.com/simmon_page/vite-element-admin) - 完整版码云站点
+## 三、功能清单
 
----
+- **登录与权限**：Mock 登录、动态路由注册、菜单按权限过滤。
+- **仪表盘**：首页数据概览。
+- **图表**：ECharts 折线、混合图、3D 图表。
+- **地图**：百度地图、高德地图、腾讯地图。
+- **表格**：动态表格、拖拽排序、可编辑表格、综合表格（vxe-table）。
+- **内容编辑**：wangeditor、Vditor、TinyMCE 三种编辑器，tui-image-editor 图片编辑。
+- **个人中心**：我的账号、登录历史、实名认证。
+- **框架能力**：多标签页与页面缓存（keep-alive）、侧边栏折叠、面包屑、全屏、主题设置、Mock 数据。
+- **图标体系**：Element Plus 图标 + 自研 SVG 图标双轨。
 
-- Typescript 版: [Vite-Element-Admin-ts（Github）](https://github.com/mvpyb/vite-element-admin-ts)
-- Typescript 版: [Vite-Element-Admin-ts（Gitee）](https://github.com/mvpyb/vite-element-admin-ts)
-
----
-
-- React 版: [React-Ant-Admin（Github）](https://github.com/mvpyb/react-ant-admin)
-- React 版: [React-Ant-Admin（Gitee）](https://gitee.com/simmon_page/react-antd-admin)
-
----
-
-- Nuxt Template: [Nuxt-Simple-Template（Github）](https://github.com/mvpyb/nuxt-simple-template) - 等3.x稳定了之后会同步增加3.x版本
-- Nuxt Template: [Nuxt-Simple-Template（Gitee）](https://gitee.com/simmon_page/nuxt-simple-template)
-
----
-
-- Vant Template: [Vite-Vant-Template（Github）](https://github.com/mvpyb/vite-vant-template)
-- Vant Template: [Vite-Vant-Template（Gitee）](https://gitee.com/simmon_page/vite-vant-template)
-
----
-
-
-测试账号: 随便填
-测试密码: 随便填
-
-## 效果预览(3.x )
-
-<p align="center">
-   <img alt="PureAdmin Logo" width="100%" src="http://pic.yupoo.com/454539387/b51791f0/2a9ef9f2.jpg">
-   <img alt="PureAdmin Logo" width="100%" src="http://pic.yupoo.com/454539387/5584bfb8/bb7d2925.jpg">
-   <img alt="PureAdmin Logo" width="100%" src="http://pic.yupoo.com/454539387/2d44c6f4/6d92062d.jpg">
-</p>
-
-
-## 效果预览(2.x VUEX版本)
-
-<p align="center">
-   <img alt="PureAdmin Logo" width="100%" src="http://pic.yupoo.com/454539387/904e4a82/646a9f0c.png">
-   <img alt="PureAdmin Logo" width="100%" src="http://pic.yupoo.com/454539387/396f79db/a7447eae.png">
-</p>
-
-## 准备
-
-- [Vite](https://cn.vitejs.dev/) - vite 特性
-- [Vue3](https://v3.cn.vuejs.org/) - Vue3 基础语法
-- [Vue-Router-Next](https://next.router.vuejs.org/zh/index.html) - vue-router 4.x 文档
-- [Element-Plus-Vue](https://element-plus.gitee.io/#/zh-CN/component/installation) - Element UI组件
-- [Mock.js](https://github.com/nuysoft/Mock) - mockjs 基本语法
-
-## 目录结构
+## 四、目录结构
 
 ```
-    ├── mock                       // Mock相关  
-    ├── config                     // 基础配置信息  
-    ├── src                        // 源代码
-    │   ├── api                    // 请求相关文件
-    │   ├── assets                 // 静态资源
-    │   ├── components             // 全局公用组件
-    │   ├── config                 // 全局常量等
-    │   ├── directive              // 全局指令
-    │   ├── icons                  // svg资源
-    │   ├── layout                 // layout
-    │   ├── locale                 // 国际化
-    │   ├── plugins                // plugins
-    │   ├── router                 // 路由
-    │   ├── store                  // 全局 store 管理
-    │   ├── styles                 // 全局样式
-    │   ├── utils                  // 工具函数
-    │   ├── vendor                 // 公用vendor
-    │   ├── views                  // 页面集合
-    │   │      ├── login           // 登录
-    │   ├── App.vue                // 入口页面
-    │   ├── main.js                // 入口 加载组件 初始化等
-    │   └── permission.js          // 权限管理
-    ├── .gitignore                 // git 忽略项
-    ├── favicon.ico                // favicon图标
-    ├── index.html                 // html模板
-    └── package.json               // package.json
+├── config/                 # 构建配置（Vite 插件、环境变量解析）
+├── public/                 # 静态资源（favicon.ico）
+├── src/
+│   ├── api/                # 接口定义
+│   ├── assets/             # 图片等静态资源
+│   ├── components/         # 全局公共组件
+│   ├── config/             # 全局常量
+│   ├── directive/          # 全局指令
+│   ├── icons/              # 业务 SVG 图标与 SVG 注册入口
+│   ├── layout/             # 布局（侧边栏、导航栏、标签页）
+│   ├── locale/             # 国际化
+│   ├── plugins/            # 插件初始化（Element Plus、图标、vxe-table）
+│   ├── router/             # 路由与路由模块
+│   ├── store/              # Pinia 模块
+│   ├── styles/             # 全局样式与主题变量
+│   ├── utils/              # 工具函数（请求、权限、校验）
+│   ├── views/              # 页面
+│   ├── App.vue             # 根组件
+│   ├── main.js             # 应用入口
+│   └── permission.js       # 路由守卫与权限逻辑
+├── index.html              # HTML 模板
+├── vite.config.js          # Vite 配置
+└── package.json            # 依赖与脚本
 ```
 
-## 开发
+## 五、本地启动
+
+环境要求：Node.js >= 18。
 
 ```bash
-# 克隆项目
-git clone https://github.com/mvpyb/vite-element-admin.git
-
-# 进入项目目录
-cd vite-element-admin
-
 # 安装依赖
 npm install
 
-# 建议不要用 cnpm 安装 会有各种诡异的bug 可以通过如下操作解决 npm 下载速度慢的问题
-npm install --registry=https://registry.npm.taobao.org
-
-# 启动服务
+# 启动开发服务（默认端口 9527）
 npm run dev
+
+# 生产构建
+npm run build
+
+# 本地预览构建产物
+npm run preview
 ```
 
-## 发布
+开发服务启动后访问 `http://localhost:9527`。登录使用 Mock 数据，账号与密码可任意填写。
+
+## 六、二次开发说明
+
+### 6.1 图标按语义分流
+
+- **通用交互类**（搜索、全屏、关闭、删除、返回等）：使用 `@element-plus/icons-vue`。图标已在 `src/plugins/elementIcons.js` 全量注册，模板中直接写 `<Search />`、`<FullScreen />` 即可。
+- **业务类**（菜单图标、微信登录、品牌相关图形）：放在 `src/icons/svg`。构建时由 `config/plugins.js` 中的 `svgBuilder` 打包为 SVG symbol，通过 `<svg-icon icon-class="名称" />` 使用。新增图标只需把文件放入目录，无需改代码。
+- 两类图标不要混用：Element Plus 图标不放进 `src/icons/svg`，自研 SVG 只承载业务语义。
+
+### 6.2 lottie 改为页内引用
+
+项目已移除动画相关的全局注册与全局样式引入。页面需要 Lottie 动画时，在该页面内按需 `import` 动画 JSON 与播放组件，动画资源放在页面同级目录，随路由懒加载，避免进入首屏包体。
+
+### 6.3 高德地图配置安全密钥
+
+在 `.env.local`（该文件已被 `.gitignore` 忽略，不会提交）中配置：
 
 ```bash
-# 构建生产环境
-npm run build
+VITE_AMAP_KEY = '你的 Web 端（JS API）Key'
+VITE_AMAP_SECURITY_CODE = '你的安全密钥'
 ```
 
-## qq群讨论
-![](http://pic.yupoo.com/454539387/4a6a5749/dfcf0fa0.png)
+页面通过 `window._AMapSecurityConfig.securityJsCode` 注入安全密钥后再加载 SDK。生产环境建议改用代理服务器方案，避免密钥明文出现在前端。
 
-## Donate
+## 七、后续规划
 
-如果你觉得这个项目帮助到了你，你可以帮作者买一杯果汁表示鼓励 
-
-| 微信 | 支付宝 |
-| ------ | ------- |
-| [![](http://pic.yupoo.com/454539387/193bac45/70a463c6.png)](bitcoin:)<br /></center> |[![](http://pic.yupoo.com/454539387/42d4b71d/2cb80871.png)](bitcoin:)<br /></center> |
+- **接入大模型实现 AI 辅助写作**：在文章编辑器中提供选题建议、大纲生成、续写、改写润色、标题与摘要生成；模型调用统一走后端网关，集中管理密钥、配额与调用日志。
+- **内容生产链路**：把选题库、稿件状态流转、审核发布串成完整流程。
+- **数据运营**：作者产出、内容表现与渠道效果的统计看板。

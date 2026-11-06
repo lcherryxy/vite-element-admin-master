@@ -30,11 +30,11 @@ const mockApis = {
     code: 200,
     data: {
       id: '9527',
-      name: '灰是小灰灰的灰',
+      name: '内容工坊用户',
       avatar: AVATAR_MOCK,
       roles: ['editor', 'admin'],
       phone: '15988888888',
-      email: '454539387@qq.com',
+      email: 'admin@contentstudio.local',
       identity: ''
     }
   }),

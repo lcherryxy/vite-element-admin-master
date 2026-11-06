@@ -92,40 +92,6 @@ export const asyncRoutes = [
       }
     ]
   },
-  {
-    path: '/icon',
-    name: 'Icon',
-    component: Layout,
-    meta: {
-      title: '图标'
-    },
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/icons/index.vue'),
-        name: 'Icons',
-        meta: { title: '图标', icon: 'image', noCache: true }
-      }
-    ]
-  },
-
-  {
-    path: '/directive',
-    name: 'Directive',
-    component: Layout,
-    meta: {
-      title: '指令'
-    },
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/directive/index.vue'),
-        name: 'Index',
-        meta: { title: '指令', icon: 'directive', noCache: true }
-      }
-    ]
-  },
-
   // TODO 自定义组件
   customComponents,
 
@@ -270,34 +236,11 @@ export const asyncRoutes = [
   },
 
   {
-    path: '/animate',
-    name: 'Animate',
-    component: Layout,
-    redirect: '/animate/index',
-    meta: {
-      title: '动画'
-    },
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/animate/index.vue'),
-        name: 'AnimatePage',
-        meta: { title: '动画', icon: 'animate', noCache: true }
-      }
-    ]
-  },
-
-  {
     path: '/external-link',
     name: 'ExternalLink',
     component: Layout,
     meta: { title: '外链', icon: 'outside' },
     children: [
-      {
-        path: 'https://github.com/mvpyb/vite-element-admin',
-        name: 'Github',
-        meta: { title: 'github' }
-      },
       {
         path: 'https://staging-cn.vuejs.org/',
         name: 'VUE3',

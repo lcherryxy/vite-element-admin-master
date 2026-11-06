@@ -6,10 +6,9 @@
       <div class="copyright-items">条款</div>
     </div>
     <span>
-      <i>copyright</i>
-      <i>{{ currentYear }} 沪ICP备XXXXXXXX号</i>
+      <i>©</i>
+      <i>{{ currentYear }} 内容工坊 · ContentStudio</i>
     </span>
-    <span style="margin-top: 5px"> XXXXXXXXX </span>
   </div>
 </template>
 

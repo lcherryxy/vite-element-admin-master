@@ -219,7 +219,7 @@ const set = reactive({
     title: '',
     type: '',
     status: 'published',
-    author: 'vite element admin'
+    author: '内容工坊'
   },
   textMap: {
     update: 'Edit',
@@ -300,7 +300,7 @@ const resetTemp = () => {
     title: '',
     status: 'published',
     type: '',
-    author: 'vite element admin'
+    author: '内容工坊'
   }
 }
 
@@ -317,7 +317,7 @@ const createData = async () => {
   dataForm.value?.validate(async valid => {
     if (valid) {
       set.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-      set.temp.author = 'vite element admin'
+      set.temp.author = '内容工坊'
       // await：API 调用完成后再操作本地 list，保证一致性
       await createArticle(unref(set.temp))
       list.value.unshift(unref(set.temp))

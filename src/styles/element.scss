@@ -1,3 +1,15 @@
+/* 品牌主色 #2f54eb 及衍生色（light 系列用于 hover/禁用态，dark-2 用于 active 态）
+   EP 默认样式在 main.js 中后于本文件引入，用 html:root 提升优先级确保覆盖生效 */
+html:root {
+  --el-color-primary: #2f54eb;
+  --el-color-primary-light-3: #6d87f1;
+  --el-color-primary-light-5: #97aaf5;
+  --el-color-primary-light-7: #c1ccf9;
+  --el-color-primary-light-8: #d5ddfb;
+  --el-color-primary-light-9: #eaeefd;
+  --el-color-primary-dark-2: #2643bc;
+}
+
 .h40 {
   height: 40px !important;
   //line-height: 40px;

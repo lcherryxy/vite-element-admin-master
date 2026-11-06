@@ -14,7 +14,7 @@ const props = defineProps( {
   },
   text : {
     type : String,
-    default : 'Vite Element Admin'
+    default : '内容工坊'
   }
 } )
 

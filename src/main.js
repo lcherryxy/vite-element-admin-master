@@ -6,7 +6,6 @@ import { useSvgIcon } from './icons'
 import ElementPlus from 'element-plus'
 import './permission'
 
-import 'animate.css'
 import './styles/index.scss'
 import './assets/fonts/index.css'
 import 'element-plus/dist/index.css'

@@ -47,12 +47,6 @@
             <router-link to="/">
               <el-dropdown-item>首 页</el-dropdown-item>
             </router-link>
-            <a target="_blank" href="https://github.com/mvpyb">
-              <el-dropdown-item>Github</el-dropdown-item>
-            </a>
-            <a target="_blank" href="https://gitee.com/simmon_page">
-              <el-dropdown-item>码 云</el-dropdown-item>
-            </a>
             <el-dropdown-item divided @click="logout">
               <span style="display: block">登 出</span>
             </el-dropdown-item>

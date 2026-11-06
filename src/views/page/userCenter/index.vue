@@ -156,8 +156,8 @@
     </div>
     <!--  -->
     <div class="avatar-box flex-column flex-level-center flex-vertical-center">
-      <YuThumb width="150px" height="150px" :image="set.avatar">Vite Element Admin Admin Admin Admin</YuThumb>
-      <span class="user-name ellipsis"> Hi,{{ set.name || '小灰灰' }} </span>
+      <YuThumb width="150px" height="150px" :image="set.avatar">内容工坊</YuThumb>
+      <span class="user-name ellipsis"> Hi,{{ set.name || '内容工坊用户' }} </span>
       <span class="phone">
         <span v-if="set.phone">{{ encryptionPhone(set.phone) }}</span>
         <span v-else> 你还未绑定手机 </span>

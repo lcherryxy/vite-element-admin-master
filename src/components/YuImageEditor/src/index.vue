@@ -14,7 +14,7 @@ import { base64ToFile } from '@/utils/files'
 const props = defineProps( {
   url : {
     type : String,
-    default : 'http://pic.yupoo.com/454539387/b51791f0/2a9ef9f2.jpg'
+    default : ''
   },
   fileName : {
     type : String,
