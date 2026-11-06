@@ -8,13 +8,13 @@
         <div class="card purple">
           <div class="flex-row flex-vertical-center">
             <div class="circle">
-              <svg-icon icon-class="phone_1" class="icon" />
+              <Phone class="icon" />
             </div>
             <div class="tips-info flex-column flex-vertical-center">
               <div class="f1">
                 绑定手机
-                <svg-icon v-if="set.phone" icon-class="ok" class="status-ok" />
-                <svg-icon v-else icon-class="warning_1" class="status-warning" />
+                <CircleCheck v-if="set.phone" class="status-ok" />
+                <Warning v-else class="status-warning" />
               </div>
               <div class="f2">
                 {{ set.phone ? '已绑定手机' : '未绑定，请尽快绑定' }}
@@ -27,13 +27,13 @@
         <div class="card orange">
           <div class="flex-row flex-vertical-center">
             <div class="circle">
-              <svg-icon icon-class="safe" class="icon" />
+              <Lock class="icon" />
             </div>
             <div class="tips-info flex-column flex-vertical-center">
               <div class="f1">
                 实名认证
-                <svg-icon v-if="set.identity" icon-class="ok" class="status-ok" />
-                <svg-icon v-else icon-class="warning_1" class="status-warning" />
+                <CircleCheck v-if="set.identity" class="status-ok" />
+                <Warning v-else class="status-warning" />
               </div>
               <div class="f2">
                 {{ set.identity ? '已实名认证' : '请尽快完成实名认证' }}
@@ -46,13 +46,13 @@
         <div class="card green">
           <div class="flex-row flex-vertical-center">
             <div class="circle">
-              <svg-icon icon-class="msg_1" class="icon" />
+              <ChatDotRound class="icon" />
             </div>
             <div class="tips-info flex-column flex-vertical-center">
               <div class="f1">
                 绑定邮箱
-                <svg-icon v-if="set.phone" icon-class="ok" class="status-ok" />
-                <svg-icon v-else icon-class="warning_1" class="status-warning" />
+                <CircleCheck v-if="set.phone" class="status-ok" />
+                <Warning v-else class="status-warning" />
               </div>
               <div class="f2">
                 {{ set.email ? '已绑定邮箱' : '未绑定，请尽快绑定' }}
@@ -65,13 +65,13 @@
         <div class="card blue">
           <div class="flex-row flex-vertical-center">
             <div class="circle">
-              <svg-icon icon-class="text" class="icon" />
+              <Document class="icon" />
             </div>
             <div class="tips-info flex-column flex-vertical-center">
               <div class="f1">
                 个人信息
-                <svg-icon v-if="set.isPerfect" icon-class="ok" class="status-ok" />
-                <svg-icon v-else icon-class="warning_1" class="status-warning" />
+                <CircleCheck v-if="set.isPerfect" class="status-ok" />
+                <Warning v-else class="status-warning" />
               </div>
               <div class="f2">
                 {{ set.isPerfect ? '个人信息已完善' : '个人信息未完善' }}

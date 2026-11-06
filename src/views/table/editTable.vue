@@ -25,7 +25,7 @@
 
           <el-table-column width="100px" label="Importance">
             <template #default="{ row }">
-              <svg-icon v-for="n in row.importance" :key="n" icon-class="star" class="icon-star" />
+              <Star v-for="n in row.importance" :key="n" class="icon-star" />
             </template>
           </el-table-column>
 
@@ -74,7 +74,7 @@
 
           <vxe-column width="100px" title="Importance">
             <template #default="{ row }">
-              <svg-icon v-for="n in row.importance" :key="n" icon-class="star" class="icon-star" />
+              <Star v-for="n in row.importance" :key="n" class="icon-star" />
             </template>
           </vxe-column>
 
@@ -195,5 +195,12 @@ defineOptions({
   position: absolute;
   right: 15px;
   top: 10px;
+}
+
+.icon-star {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  vertical-align: -0.15em;
 }
 </style>

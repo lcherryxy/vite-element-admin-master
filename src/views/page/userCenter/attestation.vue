@@ -32,7 +32,7 @@
 
       <div v-else class="auth-body flex-column flex-vertical-center">
         <div class="flex-row flex-vertical-center">
-          <svg-icon icon-class="ok" />
+          <CircleCheck class="auth-icon" />
           <p class="label">完成身份认证</p>
         </div>
         <div class="getter-row flex-row flex-vertical-center flex-between" style="margin-top: 54px">
@@ -157,7 +157,8 @@ defineOptions( {
     width: 100%;
   }
 
-  .svg-icon {
+  /* EP 图标直接渲染 svg，样式选择器由 .svg-icon 改成对应 class */
+  .auth-icon {
     color: #67c23a;
     width: 28px;
     height: 28px;

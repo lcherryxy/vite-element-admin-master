@@ -16,4 +16,5 @@ const locale = computed(() => (appStore.lang === 'zh' ? zh : en))
 const size = computed(() => appStore.size)
 
 defineOptions({ name: 'App' })
+
 </script>

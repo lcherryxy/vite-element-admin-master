@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeUnmount, onActivated, onDeactivated } from 'vue'
 import AMapLoader from '@amap/amap-jsapi-loader'
 import YuLayout from '@/components/YuLayout'
 
@@ -55,6 +55,21 @@ const options = {
   Loca : {
     version : '2.0.0'
   }
+}
+
+// AMap 聚合插件内部 canvas 会反复 getImageData，Chrome 提示应开启 willReadFrequently
+// 仅在地图页生命周期内给 2d canvas 注入该选项，离开页面还原，避免影响 ECharts 等其它画布
+const originalGetContext = HTMLCanvasElement.prototype.getContext
+function patchCanvasReadFrequently() {
+  HTMLCanvasElement.prototype.getContext = function (type, options) {
+    if (type === '2d') {
+      return originalGetContext.call(this, type, { ...(options || {}), willReadFrequently: true })
+    }
+    return originalGetContext.call(this, type, options)
+  }
+}
+function restoreCanvasGetContext() {
+  HTMLCanvasElement.prototype.getContext = originalGetContext
 }
 const addMark = async map => {
   const marker = new AMap.Marker( {
@@ -77,7 +92,11 @@ const customMark = async map => {
 
 // AMapLoader：高德地图 SDK 动态加载器（npm install @amap/amap-jsapi-loader）
 onMounted( async () => {
+  patchCanvasReadFrequently()
   try {
+    window._AMapSecurityConfig = {
+      securityJsCode: import.meta.env.VITE_AMAP_SECURITY_CODE
+    }
     const AMap = await AMapLoader.load( options )
     const map = new AMap.Map( container.value, {
       zoom : 12,
@@ -94,6 +113,11 @@ onMounted( async () => {
     console.error( '高德地图加载失败', e )
   }
 } )
+
+// keep-alive 缓存时，离开页面用 onDeactivated 还原，避免补丁影响其它页面的 canvas
+onDeactivated( restoreCanvasGetContext )
+onActivated( patchCanvasReadFrequently )
+onBeforeUnmount( restoreCanvasGetContext )
 </script>
 
 <style lang="scss" scoped>

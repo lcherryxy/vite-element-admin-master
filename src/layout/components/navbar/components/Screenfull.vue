@@ -1,6 +1,7 @@
 <template>
   <div class="screen-full">
-    <svg-icon class-name="icons" :icon-class="isFullscreen ? 'exit-fullscreen' : 'fullscreen'" @click="click" />
+    <FullScreen v-if="!isFullscreen" class="icons" @click="click" />
+    <svg-icon v-else class-name="icons" icon-class="exit-fullscreen" @click="click" />
   </div>
 </template>
 
@@ -58,6 +59,12 @@ defineOptions( {
   &:hover {
     cursor: pointer;
     background: #f0f0f0;
+  }
+  /* EP 图标直接渲染 svg，需要显式尺寸（等同于原 svg-icon 的 1em） */
+  .icons {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
   }
 }
 </style>

@@ -64,7 +64,7 @@
           </el-table-column>
           <el-table-column label="Imp" width="80px">
             <template #default="{ row }">
-              <svg-icon v-for="n in row.importance" :key="n" icon-class="star" class="meta-item__icon" />
+              <Star v-for="n in row.importance" :key="n" class="meta-item__icon" />
             </template>
           </el-table-column>
           <el-table-column label="Readings" align="center" width="95">
@@ -440,6 +440,13 @@ defineOptions({
 
 .pagination-center {
   margin: 60px 0 30px;
+}
+
+.meta-item__icon {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  vertical-align: -0.15em;
 }
 
 /*el-table el-table-column 组件中 使用插槽 加载 el-image 组件预览图片 层级过低问题*/

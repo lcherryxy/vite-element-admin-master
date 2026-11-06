@@ -1,6 +1,6 @@
 <template>
   <div class="hamburger-section" @click="toggleClick">
-    <svg-icon icon-class="hamburger" class-name="hamburger" :class="{ 'is-active': props.isActive }" />
+    <Menu class="hamburger" :class="{ 'is-active': props.isActive }" />
   </div>
 </template>
 

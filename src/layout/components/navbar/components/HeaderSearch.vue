@@ -1,6 +1,6 @@
 <template>
   <div :class="{ show: show }" class="header-search">
-    <svg-icon class-name="search-icon" icon-class="search" @click.stop="click" />
+    <Search class="search-icon" @click.stop="click" />
     <span style="display: inline-block; color: red; width: 40px; height: 30px; line-height: 30px">
       {{ options.length }}</span
     >
@@ -174,6 +174,9 @@ defineOptions( {
   }
 
   .search-icon {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
     cursor: pointer;
     font-size: 18px;
     vertical-align: middle;

@@ -42,10 +42,11 @@ const mockApis = {
   '/v1/user/list': () => ({ code: 200, data: { list: [] } }),
   '/login/history': () => ({ code: 200, data: [] }),
   '/article/list': (cfg) => {
-    // 生成可编辑表格的 mock 列表数据
+    // 生成可编辑表格的 mock 列表数据（模拟后端分页返回）
     const params = cfg?.params || {}
     const page = Number(params.page) || 1
     const limit = Number(params.limit) || 10
+    const authors = ['张三', '李四', '王五', '赵六']
     const statuses = ['published', 'draft', 'deleted']
     const titles = [
       'Vue3 + Vite 构建后台管理系统实践',
@@ -61,18 +62,19 @@ const mockApis = {
       'Webpack 5 模块联邦原理',
       'Vite 插件开发入门'
     ]
-    const list = Array.from({ length: limit }, (_, i) => {
-      const idx = (page - 1) * limit + i
-      return {
+    const list = []
+    for (let i = 0; i < limit; i++) {
+      const idx = (page - 1) * limit + i // 当前数据在整个列表中的序号
+      list.push({
         id: idx + 1,
         timestamp: Date.now() - idx * 86400000,
-        author: ['张三', '李四', '王五', '赵六'][idx % 4],
+        author: authors[idx % authors.length],
         importance: (idx % 5) + 1,
         pageviews: Math.floor(Math.random() * 9000) + 1000,
-        status: statuses[idx % 3],
+        status: statuses[idx % statuses.length],
         title: titles[idx % titles.length]
-      }
-    })
+      })
+    }
     return { code: 200, data: { items: list, total: 100 } }
   },
   '/article/detail': (cfg) => {
@@ -102,7 +104,6 @@ const mockApis = {
     return { code: 200, data: { ...data } }
   },
   '/test': () => ({ code: 200, data: 'ok' })
-  
 }
 function setupMock(config) {
   if (!import.meta.env.DEV || !MOCK_ENABLED) return
