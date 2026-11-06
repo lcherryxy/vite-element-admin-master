@@ -7,7 +7,6 @@
     </div>
     <span>
       <i>copyright</i>
-      <svg-icon icon-class="copyright" class="icon" />
       <i>{{ currentYear }} 沪ICP备XXXXXXXX号</i>
     </span>
     <span style="margin-top: 5px"> XXXXXXXXX </span>

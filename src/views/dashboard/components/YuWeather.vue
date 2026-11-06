@@ -14,7 +14,7 @@
         </el-col>
         <el-col :span="10">
           <div class="icon">
-            <svg-icon icon-class="rain" class-name="panel-icon" />
+            <svg-icon icon-class="Drizzling" class-name="panel-icon" />
           </div>
         </el-col>
       </el-row>
@@ -51,15 +51,15 @@
           <ul class="days-list">
             <li class="day">
               <p>Monday</p>
-              <svg-icon icon-class="cloudy" class-name="panel-icon" />
+              <svg-icon icon-class="Cloudy" class-name="panel-icon" />
             </li>
             <li class="day">
               <p>Tuesday</p>
-              <svg-icon icon-class="overcast" class-name="panel-icon" />
+              <svg-icon icon-class="MostlyCloudy" class-name="panel-icon" />
             </li>
             <li class="day">
               <p>Wednesday</p>
-              <svg-icon icon-class="sun" class-name="panel-icon" />
+              <svg-icon icon-class="Sunny" class-name="panel-icon" />
             </li>
           </ul>
         </el-carousel-item>
@@ -68,15 +68,15 @@
           <ul class="days-list">
             <li class="day">
               <p>Thursday</p>
-              <svg-icon icon-class="wind" class-name="panel-icon" />
+              <svg-icon icon-class="WindPower" class-name="panel-icon" />
             </li>
             <li class="day">
               <p>Friday</p>
-              <svg-icon icon-class="overcast" class-name="panel-icon" />
+              <svg-icon icon-class="MostlyCloudy" class-name="panel-icon" />  
             </li>
             <li class="day">
               <p>Saturday</p>
-              <svg-icon icon-class="rain" class-name="panel-icon" />
+              <svg-icon icon-class="Drizzling" class-name="panel-icon" />
             </li>
           </ul>
         </el-carousel-item>

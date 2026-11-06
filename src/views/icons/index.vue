@@ -8,7 +8,7 @@
           v-clipboard:copy="handleClipboard(item)"
           v-clipboard:success="clipboardSuccess"
         >
-          <el-tooltip class="item" effect="dark" content="Top Left 提示文字" placement="top">
+          <el-tooltip class="item" effect="dark" placement="top">
             <template #content>{{ item }}</template>
             <div class="icon-item">
               <svg-icon :icon-class="item" class-name="disabled" />
