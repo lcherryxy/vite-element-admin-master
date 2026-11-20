@@ -64,7 +64,7 @@ defineOptions( {
 <style scoped lang="scss">
 .yu-layout {
   ::v-deep(.body) {
-    background: #fff;
+    background: var(--app-panel-bg);
   }
 }
 </style>

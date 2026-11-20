@@ -58,14 +58,14 @@ defineOptions( {
   min-height: 100vh;
   padding: 15vh 0 100px;
   position: relative;
-  background: #fff;
+  background: var(--app-page-bg);
 }
 .body {
   padding: 30px 40px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   border-radius: 4px;
-  border: 1px solid #e6ebf5;
-  background-color: #fff;
+  border: 1px solid var(--app-border-color);
+  background-color: var(--app-panel-bg);
   vertical-align: middle;
   min-width: 260px;
   width: 380px;
@@ -76,7 +76,7 @@ defineOptions( {
   margin: 0 auto 20px;
 }
 .top-title {
-  color: rgba(16, 16, 16, 1);
+  color: var(--app-text-primary);
   font-size: 20px;
   height: 29px;
   line-height: 29px;

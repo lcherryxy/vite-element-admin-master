@@ -32,6 +32,17 @@
             />
           </div>
 
+          <el-divider content-position="center">主题外观</el-divider>
+
+          <div class="drawer-item theme-item">
+            <span>主题模式</span>
+            <el-radio-group v-model="set.themeMode" size="small">
+              <el-radio-button value="light">亮色</el-radio-button>
+              <el-radio-button value="dark">暗色</el-radio-button>
+              <el-radio-button value="auto">跟随系统</el-radio-button>
+            </el-radio-group>
+          </div>
+
           <el-divider content-position="center">布局模式</el-divider>
 
           <div class="drawer-item">
@@ -123,6 +134,14 @@ const set = reactive( {
     set( val ) {
       settingStore.changeLayoutMod( val )
     }
+  } ),
+  themeMode : computed( {
+    get() {
+      return settingStore.themeMode
+    },
+    set( val ) {
+      settingStore.changeThemeMode( val )
+    }
   } )
 } )
 
@@ -142,18 +161,26 @@ defineOptions( {
   word-wrap: break-word;
 
   .drawer-title {
-    color: rgba(0, 0, 0, 0.85);
+    color: var(--app-text-primary);
     font-size: 18px;
   }
 
   .drawer-item {
     height: 32px;
     margin: 25px 0;
-    color: rgba(0, 0, 0, 0.65);
+    color: var(--app-text-secondary);
     font-size: 14px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    /* 主题切换：标签与选项上下排列，避免抽屉内横向溢出 */
+    &.theme-item {
+      height: auto;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
   }
 
   .drawer-switch {
@@ -182,7 +209,7 @@ defineOptions( {
   .modeItem {
     width: 18%;
     height: 45px;
-    background: #f0f2f5;
+    background: var(--app-page-bg);
     position: relative;
     overflow: hidden;
     cursor: pointer;
@@ -242,7 +269,7 @@ defineOptions( {
     }
 
     &.active {
-      border: 2px solid #409eff;
+      border: 2px solid var(--el-color-primary);
     }
   }
 }

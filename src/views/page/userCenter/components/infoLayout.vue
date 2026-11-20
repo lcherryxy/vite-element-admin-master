@@ -35,7 +35,7 @@ defineProps( {
 .info-layout {
   margin: 20px;
   min-width: 1180px;
-  background: #fff;
+  background: var(--app-panel-bg);
   min-height: 798px;
   border-radius: 10px;
   box-shadow: 1px 1px 1px #f2f6fc;

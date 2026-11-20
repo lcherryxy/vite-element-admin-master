@@ -25,6 +25,15 @@ const useAppStore = defineStore('app', {
     toggleDevice(device) {
       this.device = device
     },
+    // 设备类型：desktop | tablet | mobile
+    setDevice(device) {
+      this.device = device
+    },
+    // 设备切换时直接设置侧边栏开合，不写入 cookie，避免影响 PC 端偏好
+    setSidebarOpened(opened, withoutAnimation = true) {
+      this.sidebar.opened = opened
+      this.sidebar.withoutAnimation = withoutAnimation
+    },
     setSize(size) {
       this.size = size
       setCookie('size', size)

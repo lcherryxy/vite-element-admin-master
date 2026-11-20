@@ -170,7 +170,7 @@ defineOptions( {
   cursor: pointer;
 
   &:hover {
-    background: #f6f6f6;
+    background: var(--app-hover-bg);
   }
 
   .search-icon {
@@ -199,7 +199,7 @@ defineOptions( {
       padding-left: 0;
       padding-right: 0;
       box-shadow: none !important;
-      border-bottom: 1px solid #d9d9d9;
+      border-bottom: 1px solid var(--app-border-color);
       vertical-align: middle;
     }
     /*  ::v-slotted(.foo) {}

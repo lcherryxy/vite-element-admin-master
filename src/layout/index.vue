@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { ref, unref, reactive, computed, watch, watchEffect, onMounted, onBeforeMount } from 'vue'
+import { ref, unref, reactive, computed, watch, onMounted, onBeforeMount } from 'vue'
 
 import { NavBar, AppMain, SideBar, TagsView, Settings } from './components'
 import { toggleClass } from '@/utils/el'
@@ -58,7 +58,8 @@ const set = reactive( {
       hideSidebar : !set.sidebar.opened,
       openSidebar : !!set.sidebar.opened,
       withoutAnimation : set.sidebar.withoutAnimation,
-      mobile : set.device === 'mobile'
+      mobile : set.device === 'mobile',
+      tablet : set.device === 'tablet'
     }
     return obj
   } ),
@@ -72,47 +73,46 @@ const handleClickOutside = params => {
 }
 
 const route = useRoute()
-const WIDTH = ref( 992 )
+// main-container 上控制滚动容器隐藏的类开关
 const containerHiddenSideBar = ref( false )
+// 断点：手机 < 768，平板 768 ~ 991，PC >= 992
+const MOBILE_WIDTH = 768
+const TABLET_WIDTH = 992
 
-watchEffect( () => {
-  if ( set.device === 'mobile' && !set.sidebar.opened ) {
-    handleClickOutside( false )
-  }
-} )
+const getDevice = () => {
+  const width = document.body.getBoundingClientRect().width - 1
+  if ( width < MOBILE_WIDTH ) return 'mobile'
+  if ( width < TABLET_WIDTH ) return 'tablet'
+  return 'desktop'
+}
+
+// 设备档位切换：手机走抽屉并收起，平板收起为图标栏，PC 默认展开
+const applyDevice = () => {
+  const device = getDevice()
+  if ( device === appStore.device ) return
+  appStore.setDevice( device )
+  appStore.setSidebarOpened( device === 'desktop' )
+}
 
 watch(
   route,
   async() => {
-    if ( set.device === 'mobile' && set.sidebar.opened ) {
-      handleClickOutside( false )
+    // 手机和平板切页后收起侧边栏，避免遮挡内容
+    if ( set.device !== 'desktop' && set.sidebar.opened ) {
+      appStore.setSidebarOpened( false, false )
     }
   },
   { immediate : true }
 )
 
-const $_isMobile = () => {
-  const rect = document.body.getBoundingClientRect()
-  return rect.width - 1 < WIDTH.value
-}
-
 const $_resizeHandler = () => {
   if ( !document.hidden ) {
-    const isMobile = $_isMobile()
-    const currentDevice = isMobile ? 'mobile' : 'desktop'
-    appStore.toggleDevice( currentDevice )
-    if ( isMobile ) {
-      handleClickOutside( true )
-    }
+    applyDevice()
   }
 }
 
 onMounted( () => {
-  const isMobile = $_isMobile()
-  if ( isMobile ) {
-    appStore.toggleDevice( 'mobile' )
-    handleClickOutside( true )
-  }
+  applyDevice()
   toggleClass( unref( containerHiddenSideBar ), hiddenMainContainer, document.querySelector( '.main-container' ) )
 } )
 

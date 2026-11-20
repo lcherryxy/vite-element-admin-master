@@ -300,7 +300,7 @@ defineOptions( {
   margin-right: 10px;
   .card {
     padding: 20px 0 0 20px;
-    background: #fff;
+    background: var(--app-panel-bg);
     width: 222px;
     height: 134px;
     border-radius: 10px;
@@ -406,7 +406,7 @@ defineOptions( {
 }
 
 .card-section {
-  background: #fff;
+  background: var(--app-panel-bg);
   margin-top: 10px;
   width: 920px;
   height: 315px;
@@ -445,7 +445,7 @@ defineOptions( {
 }
 
 .avatar-box {
-  background: #fff;
+  background: var(--app-panel-bg);
   min-width: 250px;
   height: 315px;
   border-radius: 10px;

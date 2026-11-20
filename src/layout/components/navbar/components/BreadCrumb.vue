@@ -79,7 +79,7 @@ defineOptions( {
   line-height: 50px;
 
   .no-redirect {
-    color: #97a8be;
+    color: var(--app-text-secondary);
     cursor: text;
   }
 }

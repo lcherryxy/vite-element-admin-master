@@ -63,7 +63,7 @@ defineOptions( {
   -webkit-box-orient: vertical;
   flex-direction: column;
   word-wrap: break-word;
-  background-color: #fff;
+  background-color: var(--app-panel-bg);
   background-clip: border-box;
   border-radius: 8px;
   margin-bottom: 24px;

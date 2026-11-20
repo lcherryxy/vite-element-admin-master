@@ -106,7 +106,7 @@ defineOptions( {
     top: -45px;
     left: 0;
     border: 5px solid #ffffff;
-    background-color: #fff;
+    background-color: var(--app-panel-bg);
     margin: auto;
     box-shadow: none !important;
 

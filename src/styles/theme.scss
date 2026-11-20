@@ -1,0 +1,97 @@
+/**
+ * 全局主题变量
+ * 亮色为默认值，html.dark 下覆盖为暗色，组件里统一使用 var(--app-xxx)
+ */
+
+:root {
+  --app-page-bg: #f0f2f5;
+  --app-panel-bg: #ffffff;
+  --app-panel-bg-soft: #fafafa;
+  --app-header-bg: #ffffff;
+  --app-header-text: rgba(0, 0, 0, 0.85);
+  --app-text-primary: #181818;
+  --app-text-regular: #29282b;
+  --app-text-secondary: rgba(0, 0, 0, 0.65);
+  --app-border-color: #e4e7ed;
+  --app-border-color-light: #ebeef5;
+  --app-hover-bg: rgba(0, 0, 0, 0.025);
+  --app-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  --app-sidebar-bg: #545c64;
+  --app-sidebar-logo-bg: #2b2f3a;
+  --app-scrollbar-thumb: #c0c4cc;
+}
+
+html.dark {
+  --app-page-bg: #141414;
+  --app-panel-bg: #1d1e1f;
+  --app-panel-bg-soft: #232324;
+  --app-header-bg: #1d1e1f;
+  --app-header-text: rgba(255, 255, 255, 0.85);
+  --app-text-primary: rgba(255, 255, 255, 0.9);
+  --app-text-regular: rgba(255, 255, 255, 0.75);
+  --app-text-secondary: rgba(255, 255, 255, 0.65);
+  --app-border-color: #414243;
+  --app-border-color-light: #363637;
+  --app-hover-bg: rgba(255, 255, 255, 0.06);
+  --app-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  --app-sidebar-bg: #1d1e1f;
+  --app-sidebar-logo-bg: #17181a;
+  --app-scrollbar-thumb: #4c4d4f;
+}
+
+/* 品牌主色：亮色沿用白色混色，暗色按 Element Plus 暗色算法与 #141414 混色 */
+html:root {
+  --el-color-primary: #2f54eb;
+  --el-color-primary-light-3: #6d87f1;
+  --el-color-primary-light-5: #97aaf5;
+  --el-color-primary-light-7: #c1ccf9;
+  --el-color-primary-light-8: #d5ddfb;
+  --el-color-primary-light-9: #eaeefd;
+  --el-color-primary-dark-2: #2643bc;
+}
+
+html.dark:root {
+  --el-color-primary: #2f54eb;
+  --el-color-primary-light-3: #2741ab;
+  --el-color-primary-light-5: #223480;
+  --el-color-primary-light-7: #1c2755;
+  --el-color-primary-light-8: #19213f;
+  --el-color-primary-light-9: #171a2a;
+  --el-color-primary-dark-2: #5976ef;
+}
+
+html,
+body {
+  background-color: var(--app-page-bg);
+}
+
+html.dark body {
+  color: var(--app-text-secondary);
+}
+
+/* 页面布局容器（YuLayout）跟随主题 */
+#app .yu-layout {
+  .header {
+    background: var(--app-panel-bg);
+  }
+  .header .header-tt {
+    color: var(--app-text-primary);
+  }
+  .header .header-desc {
+    color: var(--app-text-regular);
+  }
+  .footer {
+    background: var(--app-panel-bg);
+    color: var(--app-text-regular);
+  }
+}
+
+/* 滚动条在暗色下降低亮度 */
+html.dark {
+  ::-webkit-scrollbar-thumb {
+    background: var(--app-scrollbar-thumb);
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}

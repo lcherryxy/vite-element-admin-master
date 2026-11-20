@@ -58,7 +58,7 @@ defineOptions( {
   justify-content: space-around;
   &:hover {
     cursor: pointer;
-    background: #f0f0f0;
+    background: var(--app-hover-bg);
   }
   /* EP 图标直接渲染 svg，需要显式尺寸（等同于原 svg-icon 的 1em） */
   .icons {

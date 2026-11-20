@@ -300,12 +300,13 @@ defineOptions( {
 .tags-view-container {
   height: 34px;
   width: 100%;
-  background: #fff;
-  border-bottom: 1px solid #d8dce5;
+  background: var(--app-panel-bg);
+  border-bottom: 1px solid var(--app-border-color);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
   .contextmenu {
     margin: 0;
-    background: #fff;
+    background: var(--app-panel-bg);
+    color: var(--app-text-regular);
     z-index: 3000;
     position: absolute;
     list-style-type: none;
@@ -313,14 +314,13 @@ defineOptions( {
     border-radius: 4px;
     font-size: 12px;
     font-weight: 400;
-    color: #333;
     box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
     li {
       margin: 0;
       padding: 7px 16px;
       cursor: pointer;
       &:hover {
-        background: #eee;
+        background: var(--app-hover-bg);
       }
     }
   }
@@ -346,9 +346,9 @@ defineOptions( {
     cursor: pointer;
     height: 26px;
     line-height: 26px;
-    border: 1px solid #d8dce5;
-    color: #495060;
-    background: #fff;
+    border: 1px solid var(--app-border-color);
+    color: var(--app-text-secondary);
+    background: var(--app-panel-bg);
     padding: 0 8px;
     font-size: 12px;
     margin-left: 5px;
@@ -361,9 +361,9 @@ defineOptions( {
       margin-right: 15px;
     }
     &.active {
-      background-color: #42b983;
+      background-color: var(--el-color-primary);
       color: #fff;
-      border-color: #42b983;
+      border-color: var(--el-color-primary);
       &::before {
         content: '';
         background: #fff;
@@ -389,8 +389,8 @@ defineOptions( {
         vertical-align: -3px;
       }
       &:hover {
-        background-color: #b4bccc;
-        color: #fff;
+        background-color: var(--app-border-color);
+        color: var(--app-text-primary);
       }
     }
   }

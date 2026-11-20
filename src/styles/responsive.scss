@@ -1,0 +1,192 @@
+/**
+ * 响应式适配
+ * 断点约定：手机 < 768px，平板 768-991px，PC >= 992px
+ * 与 src/layout/index.vue 中的设备判断保持一致
+ */
+
+/* ---------------- 平板及以下（< 992px） ---------------- */
+@media (max-width: 991px) {
+  /* 导航栏压缩左右留白 */
+  #app .navbar {
+    padding-right: 4px;
+  }
+
+  #app .navbar .right-menu {
+    min-width: 0;
+  }
+
+  /* 页面容器留白收窄 */
+  #app .yu-layout .header {
+    padding: 12px 16px;
+  }
+
+  #app .yu-layout .body {
+    padding: 12px;
+    /* 部分页面内部有固定宽度布局，窄屏改为横向滚动而不是裁切 */
+    overflow: auto;
+  }
+
+  #app .yu-layout .footer {
+    padding: 8px 12px;
+  }
+
+  /* 弹层宽度自适应，避免小屏溢出 */
+  .el-dialog {
+    width: 92% !important;
+    max-width: 640px;
+    margin-top: 8vh !important;
+  }
+
+  .el-message-box {
+    width: 90% !important;
+    max-width: 420px;
+  }
+
+  .el-drawer {
+    max-width: 92vw;
+  }
+
+  /* 表格与分页在窄屏下更紧凑 */
+  .el-table {
+    font-size: 13px;
+  }
+
+  .el-pagination {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+}
+
+/* ---------------- 手机（< 768px） ---------------- */
+@media (max-width: 767px) {
+  /* 导航栏：进一步压缩，隐藏非必要工具 */
+  #app .navbar {
+    height: 48px;
+  }
+
+  #app .navbar .hamburger-container {
+    padding: 0 10px;
+  }
+
+  #app .navbar .breadcrumb-container {
+    max-width: 45vw;
+    overflow: hidden;
+  }
+
+  #app .app-breadcrumb.el-breadcrumb {
+    line-height: 48px;
+  }
+
+  #app .navbar .right-menu .size-select,
+  #app .navbar .right-menu .lang-select,
+  #app #screenfull {
+    display: none;
+  }
+
+  #app .navbar .right-menu .avatar-container {
+    margin-right: 8px;
+  }
+
+  #app .navbar .right-menu .username {
+    display: none;
+  }
+
+  #app .navbar .right-menu .user-avatar {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  /* 标签页高度收窄 */
+  #app .tags-view-container {
+    height: 32px;
+  }
+
+  #app .tags-view-wrapper .el-scrollbar__wrap {
+    height: 45px;
+  }
+
+  #app .tags-view-wrapper .tags-view-item {
+    height: 24px;
+    line-height: 24px;
+    margin-top: 4px;
+  }
+
+  /* 页面标题与正文 */
+  #app .yu-layout .header {
+    padding: 10px 12px;
+  }
+
+  #app .yu-layout .header .header-tt {
+    font-size: 17px;
+    line-height: 26px;
+  }
+
+  #app .yu-layout .header .header-desc {
+    padding-top: 6px;
+    font-size: 13px;
+  }
+
+  #app .yu-layout .body {
+    padding: 10px;
+  }
+
+  /* 表单在手机上更紧凑，提交按钮可占满一行 */
+  .el-form-item {
+    margin-bottom: 14px;
+  }
+
+  .el-dialog {
+    width: 94% !important;
+    margin-top: 5vh !important;
+  }
+
+  .el-dialog__body {
+    padding: 14px;
+  }
+
+  .el-card__body {
+    padding: 12px;
+  }
+
+  /* 固定头部高度同步调整：导航 48 + 标签 32 */
+  #app .fixed-header + .app-main {
+    padding-top: 48px;
+  }
+
+  #app .hasTagsView .fixed-header + .app-main {
+    padding-top: 80px;
+  }
+
+  #app .app-main {
+    min-height: calc(100vh - 48px);
+  }
+
+  /* el-scrollbar 高度在 JS 中按 84/50 计算，手机端头部为 80/48，这里做校正 */
+  #app .main-container.hasTagsView .app-main .el-scrollbar {
+    height: calc(100vh - 80px) !important;
+  }
+
+  #app .main-container:not(.hasTagsView) .app-main .el-scrollbar {
+    height: calc(100vh - 48px) !important;
+  }
+
+  #app .hasTagsView .app-main {
+    min-height: calc(100vh - 80px);
+  }
+
+  /* 登录页留白与版权区适配 */
+  #app .login-container {
+    padding: 8vh 16px 90px;
+  }
+
+  #app .copyright-container {
+    padding: 0 16px;
+  }
+}
+
+/* ---------------- 横屏手机 / 矮屏 ---------------- */
+@media (max-width: 991px) and (max-height: 500px) {
+  #app .sidebar-container .el-scrollbar {
+    height: 100%;
+  }
+}

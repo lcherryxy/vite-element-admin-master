@@ -461,7 +461,7 @@ defineOptions({
 
 .yu-layout {
   ::v-deep(.body) {
-    background: #fff;
+    background: var(--app-panel-bg);
   }
 }
 </style>

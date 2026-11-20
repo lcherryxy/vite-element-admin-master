@@ -21,10 +21,20 @@
 
       <!-- Element Plus：el-tooltip 悬停提示「全局 size 设置」 -->
       <el-tooltip content="全局size设置" effect="dark" placement="bottom">
-        <size-select id="size-select" class="p8 hover-effect" />
+        <size-select id="size-select" class="p8 hover-effect size-select" />
       </el-tooltip>
 
-      <LangSelect class="p8 hover-effect" />
+      <LangSelect class="p8 hover-effect lang-select" />
+
+      <!-- 主题切换：亮色 / 暗色 -->
+      <el-tooltip :content="set.isDark ? '切换到亮色' : '切换到暗色'" effect="dark" placement="bottom">
+        <div class="p8 hover-effect theme-switch" @click="toggleTheme">
+          <el-icon :size="18">
+            <Sunny v-if="set.isDark" />
+            <Moon v-else />
+          </el-icon>
+        </div>
+      </el-tooltip>
 
       <!-- Element Plus：el-dropdown 用户菜单（个人中心 / 登出） -->
       <el-dropdown class="p8 avatar-container right-menu-item hover-effect" trigger="click">
@@ -105,8 +115,16 @@ const set = reactive( {
   } ),
   device : computed( () => {
     return appStore.device
+  } ),
+  isDark : computed( () => {
+    return settingsStore.isDark
   } )
 } )
+
+// 主题切换：亮色 / 暗色
+const toggleTheme = () => {
+  settingsStore.toggleTheme()
+}
 
 // 退出登录
 const logout = async() => {
@@ -129,8 +147,9 @@ defineOptions( {
   height: 50px;
   overflow: hidden;
   position: relative;
-  background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  background: var(--app-header-bg);
+  box-shadow: var(--app-shadow);
+  transition: background-color 0.3s;
 
   .hamburger-container {
     line-height: 46px;
@@ -141,7 +160,7 @@ defineOptions( {
     -webkit-tap-highlight-color: transparent;
 
     &:hover {
-      background: rgba(0, 0, 0, 0.025);
+      background: var(--app-hover-bg);
     }
   }
 
@@ -159,7 +178,7 @@ defineOptions( {
     display: flex;
     min-width: 280px;
     align-items: center;
-    color: #000000d9;
+    color: var(--app-header-text);
     justify-content: flex-end;
     padding-right: 10px;
 
@@ -178,7 +197,7 @@ defineOptions( {
       transition: background 0.3s;
 
       &:hover {
-        background: rgba(0, 0, 0, 0.025);
+        background: var(--app-hover-bg);
       }
     }
 
@@ -190,8 +209,17 @@ defineOptions( {
       display: inline-block;
       height: 100%;
       font-size: 18px;
-      color: #5a5e66;
+      color: var(--app-text-secondary);
       vertical-align: text-bottom;
+    }
+
+    /* 主题切换按钮 */
+    .theme-switch {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      color: var(--app-text-secondary);
+      -webkit-tap-highlight-color: transparent;
     }
 
     .avatar-container {
@@ -235,7 +263,7 @@ defineOptions( {
       align-items: center;
       justify-content: space-around;
       .setting {
-        color: #000;
+        color: var(--app-text-secondary);
       }
     }
   }

@@ -126,13 +126,13 @@ const cardList = ref( [
 <style lang="scss" scoped>
 .dashboard-editor-container {
   padding: 32px;
-  background-color: rgb(240, 242, 245);
+  background-color: var(--app-page-bg);
   position: relative;
 
   .chats-container {
     .chart-wrapper {
       border-radius: 5px;
-      background: #fff;
+      background: var(--app-panel-bg);
       padding: 20px;
       box-sizing: border-box;
       margin-bottom: 20px;

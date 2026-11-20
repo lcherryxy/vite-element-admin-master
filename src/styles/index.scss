@@ -9,8 +9,14 @@
 @use './sidebar.scss' as *;
 //@use './btn.scss' as *;
 
+// 主题变量（亮色 / 暗色）与品牌色
+@use './theme.scss' as *;
+
 // 对 Element Plus 部分样式进行改写
 @use './element.scss' as *;
+
+// 响应式适配（手机 / 平板 / PC）
+@use './responsive.scss' as *;
 
 /*ICONFONT*/
 [class*='yu-icon-'],

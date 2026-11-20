@@ -93,7 +93,7 @@ defineOptions( {
 
 <style lang="scss">
 .card {
-  background: #fff;
+  background: var(--app-panel-bg);
   transition: 0.5s;
   border: 0;
   border-radius: 0.1875rem;
