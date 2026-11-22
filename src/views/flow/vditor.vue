@@ -1,32 +1,18 @@
 <template>
-  <YuLayout title="Vditor">
-    <template #head>
-      富文本 Vditor
-      <el-link type="primary"
-href="https://ld246.com/article/1549638745630"
-target="_blank"
-underline="never"
-        >点我查看更多</el-link
-      >
-    </template>
-    <template #body>
-      <div class="app-container">
-        <el-card class="box-card">
-          <template #header>
-            <div class="card-header">
-              <span>Vditor</span>
-            </div>
-          </template>
-          <div id="vditor" />
-        </el-card>
-      </div>
-    </template>
-  </YuLayout>
+  <EditorShowcase
+    title="Markdown 编辑器 - Vditor"
+    subtitle="Vditor 是一款浏览器端的 Markdown 编辑器，支持所见即所得、即时渲染与分屏预览，适合写作与文档编辑场景。"
+    doc-link="https://ld246.com/article/1549638745630"
+    doc-text="使用文档"
+    panel-title="Vditor"
+  >
+    <div id="vditor" class="vditor-box" />
+  </EditorShowcase>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import YuLayout from '@/components/YuLayout'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import EditorShowcase from './components/EditorShowcase.vue'
 import Vditor from 'vditor'
 import 'vditor/dist/index.css'
 
@@ -42,15 +28,27 @@ onMounted( () => {
     cache : {
       enable : false
     },
-    // "value": "## 即时渲染（IR）\n即时渲染模式对熟悉 Typora 的用户应该不会感到陌生，理论上这是最优雅的 Markdown 编辑方式。",
     after : () => {
-      // // vditor.value is a instance of Vditor now and thus can be safely used here
-      // vditor.value.setValue('Vue Composition API + Vditor');
+      // vditor.value 此时已可用
     }
   } )
+} )
+
+// 离开页面时销毁实例，避免重复初始化
+onBeforeUnmount( () => {
+  vditor.value?.destroy()
+  vditor.value = null
 } )
 
 defineOptions( {
   name : 'Vditor'
 } )
 </script>
+
+<style lang="scss" scoped>
+.vditor-box {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+}
+</style>

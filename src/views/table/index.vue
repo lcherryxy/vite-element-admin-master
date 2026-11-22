@@ -1,75 +1,135 @@
 <template>
-  <yu-layout title="vxe-table">
-    <template #head>
-      更强大的table组件，解决复杂的表格业务，提高开发效率以及渲染性能。vxe-table
-      利用虚拟滚动，仅渲染用户可视的部分，其他部分不渲染，这对于表格的性能有比较大的提升
-      <el-link type="primary"
-href="https://vxetable.cn/#/table/start/install"
-target="_blank"
-underline="never"
-        >点我查看更多</el-link
-      >
-    </template>
-
+  <YuLayout title="表格综合示例">
     <template #body>
-      <div>
-        <el-button type="primary" v-wave>主要颜色</el-button>
-        <vxe-table border :column-config="{ resizable: true }" :tree-config="{ transform: true }" :data="tableData">
-          <vxe-column field="name" title="Name" tree-node></vxe-column>
-          <vxe-column type="expand" title="Details" width="80">
-            <template #content="{ row }">
-              <ul class="expand-wrapper">
-                <li>
-                  <span>ID：</span>
-                  <span>{{ row.id }}</span>
-                </li>
-                <li>
-                  <span>Name：</span>
-                  <span>{{ row.name }}</span>
-                </li>
-                <li>
-                  <span>Date</span>
-                  <span>{{ row.date }}</span>
-                </li>
-              </ul>
-            </template>
-          </vxe-column>
-          <vxe-column field="size" title="Size"></vxe-column>
-          <vxe-column field="type" title="Type"></vxe-column>
-          <vxe-column field="date" title="Date"></vxe-column>
-        </vxe-table>
+      <div class="app-container">
+        <YuCrudTable
+          v-model:data="list"
+          :columns="columns"
+          :form-fields="formFields"
+          :search-keys="['title', 'author']"
+          :status-filter="statusFilter"
+          :page-size="10"
+          :create-default="createDefault"
+          :loading="listLoading"
+        />
       </div>
     </template>
-  </yu-layout>
+  </YuLayout>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { ElMessage } from 'element-plus'
 import YuLayout from '@/components/YuLayout'
-const tableData = ref( [
-  { id : 10000, parentId : null, name : 'test abc1', type : 'mp3', size : 1024, date : '2020-08-01' },
-  { id : 10050, parentId : null, name : 'Test2', type : 'mp4', size : null, date : '2021-04-01' },
-  { id : 24300, parentId : 10050, name : 'Test3', type : 'avi', size : 1024, date : '2020-03-01' },
-  { id : 20045, parentId : 24300, name : 'test abc4', type : 'html', size : 600, date : '2021-04-01' },
-  { id : 10053, parentId : 24300, name : 'test abc96', type : 'avi', size : null, date : '2021-04-01' },
-  { id : 24330, parentId : 10053, name : 'test abc5', type : 'txt', size : 25, date : '2021-10-01' },
-  { id : 21011, parentId : 10053, name : 'Test6', type : 'pdf', size : 512, date : '2020-01-01' },
-  { id : 22200, parentId : 10053, name : 'Test7', type : 'js', size : 1024, date : '2021-06-01' },
-  { id : 23666, parentId : null, name : 'Test8', type : 'xlsx', size : 2048, date : '2020-11-01' },
-  { id : 23677, parentId : 23666, name : 'Test7', type : 'js', size : 1024, date : '2021-06-01' },
-  { id : 23671, parentId : 23677, name : 'Test7', type : 'js', size : 1024, date : '2021-06-01' },
-  { id : 23672, parentId : 23677, name : 'Test7', type : 'js', size : 1024, date : '2021-06-01' },
-  { id : 23688, parentId : 23666, name : 'Test7', type : 'js', size : 1024, date : '2021-06-01' },
-  { id : 23681, parentId : 23688, name : 'Test7', type : 'js', size : 1024, date : '2021-06-01' },
-  { id : 23682, parentId : 23688, name : 'Test7', type : 'js', size : 1024, date : '2021-06-01' },
-  { id : 24555, parentId : null, name : 'test abc9', type : 'avi', size : 224, date : '2020-10-01' },
-  { id : 24566, parentId : 24555, name : 'Test7', type : 'js', size : 1024, date : '2021-06-01' },
-  { id : 24577, parentId : 24555, name : 'Test7', type : 'js', size : 1024, date : '2021-06-01' }
-] )
+import YuCrudTable from '@/components/YuCrudTable'
+import { getArticle } from '@/api/article'
+import logoImg from '@/assets/logo.png'
 
-defineOptions( {
-  name : 'TablePage'
-} )
+const statusOptions = [
+  { label: '已发布', value: 'published' },
+  { label: '草稿', value: 'draft' },
+  { label: '已删除', value: 'deleted' }
+]
+const statusTagMap = { published: 'success', draft: 'info', deleted: 'danger' }
+const statusTextMap = { published: '已发布', draft: '草稿', deleted: '已删除' }
+const reviewerPool = ['李审核', '王审核', '赵审核', '周审核']
+
+const columns = [
+  { prop: 'id', label: 'ID', minWidth: 70, align: 'center' },
+  { prop: 'timestamp', label: '日期', minWidth: 120, align: 'center', type: 'date' },
+  { prop: 'title', label: '标题', minWidth: 160, editable: true },
+  { prop: 'author', label: '作者', minWidth: 90, align: 'center', editable: true },
+  { prop: 'reviewer', label: '审核人', minWidth: 90, align: 'center' },
+  { prop: 'importance', label: '重要性', minWidth: 90, align: 'center', type: 'star' },
+  { prop: 'pageviews', label: '阅读量', minWidth: 90, align: 'center', editable: true },
+  {
+    prop: 'status',
+    label: '状态',
+    minWidth: 90,
+    align: 'center',
+    type: 'tag',
+    options: statusOptions,
+    tagMap: statusTagMap
+  },
+  { prop: 'image_uri', label: '预览图', minWidth: 80, align: 'center', type: 'image' }
+]
+
+const formFields = [
+  { prop: 'title', label: '标题', type: 'input', required: true },
+  { prop: 'author', label: '作者', type: 'input', required: true },
+  { prop: 'reviewer', label: '审核人', type: 'input', required: true },
+  { prop: 'importance', label: '重要性', type: 'number', required: true, min: 1, max: 5 },
+  { prop: 'status', label: '状态', type: 'select', options: statusOptions, required: true },
+  { prop: 'timestamp', label: '日期', type: 'date', required: true }
+]
+
+const statusFilter = {
+  prop: 'status',
+  options: statusOptions
+}
+
+const createDefault = () => ({
+  title: '',
+  author: '',
+  reviewer: '',
+  importance: 3,
+  status: 'published',
+  timestamp: Date.now(),
+  pageviews: 0,
+  image_uri: logoImg
+})
+
+const list = ref([])
+const listLoading = ref(false)
+
+const normalizeRow = (item, index) => ({
+  ...item,
+  id: index + 1,
+  title: item.title || '未命名文章',
+  author: item.author || '佚名',
+  reviewer: item.reviewer || reviewerPool[index % reviewerPool.length],
+  importance: Number(item.importance) || 1,
+  pageviews: Number(item.pageviews) || 0,
+  status: statusTextMap[item.status] ? item.status : 'draft',
+  timestamp: item.timestamp || Date.now(),
+  image_uri: item.image_uri || logoImg
+})
+
+const getList = async () => {
+  listLoading.value = true
+  try {
+    const { data } = await getArticle({ page: 1, limit: 100 })
+    const items = Array.isArray(data)
+      ? data
+      : Array.isArray(data?.items)
+        ? data.items
+        : Array.isArray(data?.list)
+          ? data.list
+          : Array.isArray(data?.records)
+            ? data.records
+            : Array.isArray(data?.rows)
+              ? data.rows
+              : []
+    list.value = items.map(normalizeRow)
+  } catch {
+    list.value = []
+    ElMessage.error('获取列表失败')
+  } finally {
+    listLoading.value = false
+  }
+}
+
+onMounted(getList)
+
+defineOptions({
+  name: 'TablePage'
+})
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.app-container {
+  padding: 16px;
+  background: var(--app-panel-bg);
+  border-radius: 6px;
+}
+</style>

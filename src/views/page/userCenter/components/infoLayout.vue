@@ -34,9 +34,9 @@ defineProps( {
 <style lang="scss" scoped>
 .info-layout {
   margin: 20px;
-  min-width: 1180px;
+  min-width: 0;
   background: var(--app-panel-bg);
-  min-height: 798px;
+  min-height: 0;
   border-radius: 10px;
   box-shadow: 1px 1px 1px #f2f6fc;
 }

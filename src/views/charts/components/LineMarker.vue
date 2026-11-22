@@ -1,12 +1,13 @@
 <template>
-  <div :id="props.id" :class="props.className" :style="{ height: props.height, width: props.width }" />
+  <div ref="el" :id="props.id" :class="props.className" :style="{ height: props.height, width: props.width }" />
 </template>
 
 <script setup>
 // ECharts 5：折线图 + markPoint / markLine 标注
 // ECharts 4→5 迁移：去掉 .normal 层级、去掉 textStyle 嵌套（属性直接写在父级）
 import * as echarts from 'echarts'
-import { onMounted, shallowRef, onBeforeUnmount } from 'vue'
+import { onMounted, shallowRef, onBeforeUnmount, ref } from 'vue'
+import { useResizeObserver, useDebounceFn } from '@vueuse/core'
 
 const props = defineProps( {
   className : { type : String, default : 'chart' },
@@ -15,7 +16,13 @@ const props = defineProps( {
   height    : { type : String, default : '200px' }
 } )
 
+const el = ref( null )
 const chart = shallowRef( null )
+
+// 容器尺寸变化（窗口缩放、侧边栏折叠、设备档位切换）时自动重绘
+useResizeObserver( el, useDebounceFn( () => {
+  chart.value && chart.value.resize()
+}, 100 ) )
 
 onMounted( () => { initChart() } )
 

@@ -7,16 +7,18 @@
       </div>
     </template>
     <template #body>
-      <!-- Element 虚拟表格-->
-      <el-table-v2
-        v-loading="loading"
-        class="login-history-table"
-        :columns="columns"
-        :data="tableData"
-        :width="985"
-        :height="300"
-        :fixed="false"
-      />
+      <!-- Element 虚拟表格 -->
+      <div ref="tableWrap" class="table-wrap">
+        <el-table-v2
+          v-loading="loading"
+          class="login-history-table"
+          :columns="columns"
+          :data="tableData"
+          :width="tableWidth"
+          :height="300"
+          :fixed="false"
+        />
+      </div>
     </template>
     <template #foot>
       <div class="line" />
@@ -25,11 +27,19 @@
 </template>
 
 <script setup lang="jsx">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useElementSize } from '@vueuse/core'
 import { loginHistory } from '@/api/user'
 import LoginHistory from './components/infoLayout'
 
 const loading = ref( false )
+
+// 表格宽度跟随容器，窄屏不再固定 985px 撑破页面
+const tableWrap = ref( null )
+const { width: wrapWidth } = useElementSize( tableWrap )
+const tableWidth = computed( () => wrapWidth.value
+  ? Math.max( wrapWidth.value - 2, 320 )
+  : 880 )
 
 const LoginMethod = {
   0 : '未知',
@@ -108,7 +118,7 @@ defineOptions( {
 </script>
 
 <style lang="scss" scoped>
-::v-deep(.center-box) {
+:deep(.center-box) {
   margin: 80px 140px 0 70px;
   .card-title {
     color: rgba(109, 119, 136, 1);
@@ -120,10 +130,27 @@ defineOptions( {
   }
   .line {
     margin-top: 170px;
-    width: 985px;
+    width: 100%;
     height: 1px;
     border-bottom: 1px solid rgba(237, 239, 242, 1);
   }
+
+  /* 窄屏收窄左右留白，避免内容被挤压 */
+  @media (max-width: 1439px) {
+    margin: 40px 40px 0 30px;
+  }
+
+  @media (max-width: 767px) {
+    margin: 20px 12px 0;
+
+    .line {
+      margin-top: 60px;
+    }
+  }
+}
+
+.table-wrap {
+  width: 100%;
 }
 
 .login-history-table {

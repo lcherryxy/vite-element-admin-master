@@ -30,18 +30,21 @@
         </el-form>
       </div>
 
-      <div v-else class="auth-body flex-column flex-vertical-center">
+      <div v-else class="auth-body done-body flex-column flex-vertical-center">
         <div class="flex-row flex-vertical-center">
           <CircleCheck class="auth-icon" />
           <p class="label">完成身份认证</p>
         </div>
-        <div class="getter-row flex-row flex-vertical-center flex-between" style="margin-top: 54px">
-          <span class="label">真实姓名: </span>
-          <span class="value"> {{ ruleForm.name }}</span>
-        </div>
-        <div class="getter-row flex-row flex-vertical-center flex-between" style="margin-top: 15px">
-          <span class="label">身份证号: </span>
-          <span class="value"> {{ ruleForm.idNumber }}</span>
+        <!-- 信息整体作为一块水平居中，标签等宽右对齐、值左对齐，冒号对齐更整齐 -->
+        <div class="done-info">
+          <div class="getter-row">
+            <span class="label">真实姓名：</span>
+            <span class="value">{{ ruleForm.name }}</span>
+          </div>
+          <div class="getter-row">
+            <span class="label">身份证号：</span>
+            <span class="value">{{ ruleForm.idNumber }}</span>
+          </div>
         </div>
       </div>
     </template>
@@ -57,14 +60,18 @@ import { validID } from '@/utils/validate'
 // Element Plus：实名认证提交结果用 ElMessage 提示
 import { ElMessage } from 'element-plus'
 import LoginHistory from './components/infoLayout'
+import { useUserStore } from '@/store'
+
+const userStore = useUserStore()
 
 const ruleFormRef = ref()
 
-const isAttestation = ref( false )
+// 已认证则直接进入完成态，并回填实名信息
+const isAttestation = ref( !!userStore.identity )
 
 const ruleForm = reactive( {
-  name : '',
-  idNumber : ''
+  name : userStore.identity?.name || '',
+  idNumber : userStore.identity?.idNumber || ''
 } )
 
 // 校验身份证号码
@@ -109,6 +116,11 @@ const submit = async formEl => {
   ;( await formEl ) &&
     formEl.validate( ( valid, fields ) => {
       if ( valid ) {
+        // 写入用户状态，个人中心「实名认证」卡片随之由 ❗ 变为 ✅
+        userStore.updateIdentity( {
+          name : ruleForm.name,
+          idNumber : ruleForm.idNumber
+        } )
         ElMessage( {
           message : '您已提交实名认证',
           type : 'success'
@@ -124,11 +136,13 @@ defineOptions( {
 </script>
 
 <style lang="scss" scoped>
-::v-deep(.center-box) {
+/* 内容区上下等距留白，避免仅靠顶部偏移导致整体偏下 */
+::v-deep(.card-section) {
+  padding: 48px 0;
 }
 .head-text {
   text-align: center;
-  padding-top: 140px;
+  padding-top: 0;
   padding-bottom: 20px;
   .text {
     text-align: center;
@@ -171,6 +185,30 @@ defineOptions( {
   .value {
     color: rgba(190, 190, 190, 1);
     font-size: 16px;
+  }
+}
+
+/* 完成态：信息整体作为一块水平居中，标签等宽右对齐、值左对齐，冒号对齐 */
+.done-body {
+  .done-info {
+    margin-top: 40px;
+    display: inline-block;
+  }
+
+  .getter-row {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+
+    .label {
+      min-width: 96px;
+      text-align: right;
+    }
+
+    .value {
+      text-align: left;
+      word-break: break-all;
+    }
   }
 }
 </style>

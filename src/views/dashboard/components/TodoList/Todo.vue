@@ -2,7 +2,7 @@
   <li :class="{ completed: todo.done, editing: editing }" class="todo">
     <div class="view">
       <input :checked="todo.done" class="toggle" type="checkbox" @change="toggleTodo(todo)" />
-      <label @dblclick="editing = true" v-text="todo.text" />
+      <label title="双击编辑" @dblclick="editing = true" v-text="todo.text" />
       <button class="destroy" @click="deleteTodo(todo)" />
     </div>
     <input

@@ -1,45 +1,23 @@
 <template>
-  <YuLayout title="Tui-Image-Editor">
-    <template #head>
-      图片编辑器 ImageEditor
-      <el-link type="primary" href="http://nhn.github.io/tui.image-editor/latest/" target="_blank" underline="never">
-        点我查看更多
-      </el-link>
-    </template>
-    <template #body>
-      <div class="app-container">
-        <el-card class="box-card">
-          <template #header>
-            <div class="card-header">
-              <span>ImageEditor</span>
-            </div>
-          </template>
-          <ImageEditor ref="editor" />
-        </el-card>
-      </div>
-    </template>
-  </YuLayout>
+  <EditorShowcase
+    title="图片编辑器 - Tui Image Editor"
+    subtitle="基于 TOAST UI 的图片编辑器，支持裁剪、翻转、旋转、绘画、形状、图标、文字、滤镜等操作。手机端可在编辑器内部横向滚动查看完整工具栏。"
+    doc-link="http://nhn.github.io/tui.image-editor/latest/"
+    doc-text="使用文档"
+    panel-title="ImageEditor"
+  >
+    <ImageEditor ref="editor" />
+  </EditorShowcase>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import YuLayout from '@/components/YuLayout'
+import EditorShowcase from './components/EditorShowcase.vue'
 import ImageEditor from '@/components/YuImageEditor'
 
 const editor = ref()
-
-// const uploadFiles = ( ) => {
-//   const { getFile, uploadImg } = editor.value
-//   uploadImg()
-// }
 
 defineOptions( {
   name : 'ImageEditor'
 } )
 </script>
-
-<style>
-.tui-image-editor-container {
-  margin: 50px auto;
-}
-</style>

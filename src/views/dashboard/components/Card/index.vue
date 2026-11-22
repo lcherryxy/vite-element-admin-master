@@ -136,4 +136,45 @@ defineOptions( {
     }
   }
 }
+
+/* 手机端：缩小内边距与图标，标题不换行，保证四张卡片内容行数与高度一致 */
+@media (max-width: 767px) {
+  .card-item {
+    .card-body {
+      padding: 12px 14px;
+
+      .card-body-icon i {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 20px;
+      }
+
+      .text-uppercase {
+        margin-bottom: 8px;
+        font-size: 14px;
+        line-height: 18px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .mb24 {
+        height: 22px;
+        line-height: 22px;
+        margin-bottom: 10px;
+
+        .card-panel-num {
+          font-size: 16px;
+          font-weight: 600;
+        }
+      }
+
+      .card-info {
+        margin-left: 4px;
+        font-size: 12px;
+      }
+    }
+  }
+}
 </style>

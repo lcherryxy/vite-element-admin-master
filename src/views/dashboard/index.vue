@@ -1,8 +1,8 @@
 <template>
   <div class="dashboard-editor-container">
     <!-- Element Plus：el-row / el-col 栅格布局首页卡片和图表 -->
-    <el-row :gutter="20">
-      <el-col :xs="12" :sm="12" :lg="6" v-for="item in cardList" :key="item.id">
+    <el-row :gutter="20" class="card-row">
+      <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="item in cardList" :key="item.id">
         <YuCard :end="item.end" :duration="item.duration" :title="item.title" :prefix="item.prefix">
           <template #icon>
             <i class="fr" :class="item.icon"></i>
@@ -16,41 +16,38 @@
     </el-row>
 
     <el-row :gutter="20" class="chats-container">
-      <el-col :xs="24" :sm="24" :lg="8">
+      <el-col :xs="24" :sm="24" :md="12" :lg="8">
         <div class="chart-wrapper">
           <RaddarChart />
         </div>
       </el-col>
-      <el-col :xs="24" :sm="24" :lg="8">
+      <el-col :xs="24" :sm="24" :md="12" :lg="8">
         <div class="chart-wrapper">
           <PieChart />
         </div>
       </el-col>
-      <el-col :xs="24" :sm="24" :lg="8">
+      <!-- 中等宽度下第三张图整行铺满，避免单张图占半行留下空白 -->
+      <el-col :xs="24" :sm="24" :md="24" :lg="8">
         <div class="chart-wrapper">
           <BarChart class-name="test" />
         </div>
       </el-col>
     </el-row>
 
-    <el-row :gutter="20" class="table-list">
-      <el-col :span="16">
-        <TransactionTable />
+    <!-- 待办列表与运营指标并排，高度接近，窄屏自动堆叠 -->
+    <el-row :gutter="20" class="todo-row">
+      <el-col :xs="24" :sm="24" :md="16" :lg="16">
+        <TodoList />
       </el-col>
-      <el-col :span="8" style="">
-        <YuStreetMap />
+      <el-col :xs="24" :sm="24" :md="8" :lg="8">
+        <BoxCard />
       </el-col>
     </el-row>
 
-    <el-row :gutter="20" class="user-info">
-      <el-col :span="12">
+    <!-- 天气卡整行铺满，避免与短卡片并排时出现大片留白 -->
+    <el-row :gutter="20" class="weather-row">
+      <el-col :span="24">
         <YuWeather />
-      </el-col>
-      <el-col :span="6">
-        <TodoList />
-      </el-col>
-      <el-col :span="6">
-        <BoxCard />
       </el-col>
     </el-row>
   </div>
@@ -61,8 +58,6 @@ import YuCard from './components/Card/index.vue'
 import RaddarChart from './components/RaddarChart.vue'
 import PieChart from './components/PieChart.vue'
 import BarChart from './components/BarChart.vue'
-import TransactionTable from './components/TransactionTable.vue'
-import YuStreetMap from '@/components/YuStreetMap'
 import YuWeather from './components/YuWeather'
 import TodoList from './components/TodoList/index.vue'
 import BoxCard from './components/BoxCard'
@@ -129,6 +124,18 @@ const cardList = ref( [
   background-color: var(--app-page-bg);
   position: relative;
 
+  /* 四个指标卡等高：同一行卡片拉伸铺满，换行后底边依然对齐 */
+  .card-row {
+    :deep(.el-col) {
+      display: flex;
+    }
+
+    :deep(.card-item) {
+      flex: 1 1 auto;
+      width: 100%;
+    }
+  }
+
   .chats-container {
     .chart-wrapper {
       border-radius: 5px;
@@ -144,17 +151,60 @@ const cardList = ref( [
     }
   }
 
-  .table-list {
-    height: 476px;
-    .el-col {
-      padding-right: 8px;
-      margin-bottom: 30px;
+  .todo-row {
+    /* 两列等高，待办卡与右侧运营卡底边对齐 */
+    align-items: stretch;
+
+    > .el-col {
+      margin-bottom: 16px;
+      display: flex;
+    }
+
+    /* 待办卡占满所在列并撑满列高，内部纵向 flex 布局 */
+    :deep(.todoapp) {
+      max-width: none;
+      margin: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      flex: 1 1 auto;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 内容区撑满剩余高度，表格仍按内容自适应 */
+    :deep(.todoapp .crud-table) {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 分页沉底，避免表格与分页之间留出大空白 */
+    :deep(.todoapp .pagination-wrapper) {
+      margin-top: auto;
+    }
+
+    :deep(.box-card-component) {
+      width: 100%;
     }
   }
 
-  .user-info {
-    height: 560px;
-    margin: 20px 0;
+  .weather-row {
+    > .el-col {
+      margin-bottom: 16px;
+    }
+
+    :deep(.weather) {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 991px) {
+    padding: 16px;
+  }
+
+  @media (max-width: 767px) {
+    padding: 10px;
   }
 }
 </style>

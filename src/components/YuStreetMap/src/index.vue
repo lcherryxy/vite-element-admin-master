@@ -7,47 +7,14 @@ import { onMounted } from 'vue'
 import 'ol/ol.css'
 import Map from 'ol/Map'
 import View from 'ol/View'
-import GeoJSON from 'ol/format/GeoJSON'
-import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style'
-import { XYZ, Vector as VectorSource } from 'ol/source'
-import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer'
+import { fromLonLat } from 'ol/proj'
+import { XYZ } from 'ol/source'
+import { Tile as TileLayer } from 'ol/layer'
 
 // doc      : https://openlayers.org/en/latest/doc/quickstart.html
 // examples : https://openlayers.org/en/latest/examples/
 
-const source = new VectorSource( {
-  url : 'https://openlayers.org/en/latest/examples/data/geojson/switzerland.geojson',
-  format : new GeoJSON()
-} )
-const style = new Style( {
-  fill : new Fill( {
-    color : 'rgba(255, 255, 255, 0.6)'
-  } ),
-  stroke : new Stroke( {
-    color : '#319FD3',
-    width : 1
-  } ),
-  image : new CircleStyle( {
-    radius : 5,
-    fill : new Fill( {
-      color : 'rgba(255, 255, 255, 0.6)'
-    } ),
-    stroke : new Stroke( {
-      color : '#319FD3',
-      width : 1
-    } )
-  } )
-} )
-const vectorLayer = new VectorLayer( {
-  source,
-  style
-} )
-const view = new View( {
-  center : [0, 0],
-  zoom : 4
-} )
-
-// 初始化地图
+// 底图使用高德瓦片，避免 openlayers.org 示例数据在国内网络超时报错
 function initMap() {
   new Map( {
     target : 'map',
@@ -57,18 +24,14 @@ function initMap() {
           url : 'https://webrd0{1-4}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',
           attributions : '&copy; 高德地图'
         } )
-      } ),
-      vectorLayer
+      } )
     ],
-    view
+    view : new View( {
+      // 默认投影为 EPSG:3857，经纬度需转换为投影坐标
+      center : fromLonLat( [8.2275, 46.8182] ),
+      zoom : 5
+    } )
   } )
-}
-
-// 设置显示到某一区域 - 定位放大到瑞士
-function focusArea() {
-  const feature = source.getFeatures()[0]
-  const polygon = feature.getGeometry()
-  view.fit( polygon, { padding : [170, 50, 30, 150] } )
 }
 
 onMounted( () => {

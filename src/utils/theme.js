@@ -1,33 +1,22 @@
 /**
- * 主题模式：light 亮色 / dark 暗色 / auto 跟随系统
+ * 主题模式：light 亮色 / dark 暗色
  * 统一读写 localStorage，并同步 html 上的 dark 类，供 Element Plus 与自定义变量使用
  */
 import { localStorageHandle } from '@/utils/storage'
 
 const THEME_KEY = 'themeMode'
 
-export const THEME_MODES = ['light', 'dark', 'auto']
+export const THEME_MODES = ['light', 'dark']
 
-let mediaQuery = null
-
-function getMediaQuery() {
-  if (!mediaQuery) {
-    mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-  }
-  return mediaQuery
-}
-
-/** 读取本地保存的主题模式，非法值回退亮色 */
+/** 读取本地保存的主题模式，非法值（含旧的 auto）回退亮色 */
 export function getThemeMode() {
   const mode = localStorageHandle.getItem(THEME_KEY)
   return THEME_MODES.includes(mode) ? mode : 'light'
 }
 
-/** 判断某个模式当前是否应呈现暗色 */
+/** 判断某个模式是否为暗色 */
 export function isDarkTheme(mode) {
-  if (mode === 'dark') return true
-  if (mode === 'auto') return getMediaQuery().matches
-  return false
+  return mode === 'dark'
 }
 
 /** 把主题应用到 html 根节点，浏览器主题色一并同步 */
@@ -50,19 +39,7 @@ export function saveThemeMode(mode) {
   applyTheme(valid)
 }
 
-/**
- * 应用启动时初始化主题
- * 返回取消监听函数，组件卸载时可调用
- */
+/** 应用启动时初始化主题 */
 export function initTheme() {
   applyTheme(getThemeMode())
-
-  const mq = getMediaQuery()
-  const onSystemChange = () => {
-    // 只有「跟随系统」模式才需要响应系统切换
-    if (getThemeMode() === 'auto') applyTheme('auto')
-  }
-  mq.addEventListener('change', onSystemChange)
-
-  return () => mq.removeEventListener('change', onSystemChange)
 }

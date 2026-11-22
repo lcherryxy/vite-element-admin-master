@@ -36,13 +36,14 @@ defineOptions( {
 
 <style scoped>
 .pan-item {
-  width: 200px;
-  height: 200px;
   border-radius: 50%;
   display: inline-block;
   position: relative;
   cursor: default;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  /* 作为 flex 子项时保持正圆，避免被挤压成椭圆 */
+  flex: none;
 }
 
 .pan-info-roles-container {
@@ -58,14 +59,13 @@ defineOptions( {
   border-radius: 50%;
   overflow: hidden;
   position: absolute;
-  transform-origin: 95% 40%;
-  transition: all 0.3s ease-in-out;
 }
 
 .pan-info {
   position: absolute;
-  width: inherit;
-  height: inherit;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
   border-radius: 50%;
   overflow: hidden;
   box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.05);
@@ -120,10 +120,6 @@ defineOptions( {
 
 .pan-info p a:hover {
   background: rgba(255, 255, 255, 0.5);
-}
-
-.pan-item:hover .pan-thumb {
-  transform: rotate(-110deg);
 }
 
 .pan-item:hover .pan-info p a {

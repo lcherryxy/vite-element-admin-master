@@ -19,13 +19,6 @@
 
       <ScreenFull id="screenfull" class="p8 hover-effect" />
 
-      <!-- Element Plus：el-tooltip 悬停提示「全局 size 设置」 -->
-      <el-tooltip content="全局size设置" effect="dark" placement="bottom">
-        <size-select id="size-select" class="p8 hover-effect size-select" />
-      </el-tooltip>
-
-      <LangSelect class="p8 hover-effect lang-select" />
-
       <!-- 主题切换：亮色 / 暗色 -->
       <el-tooltip :content="set.isDark ? '切换到亮色' : '切换到暗色'" effect="dark" placement="bottom">
         <div class="p8 hover-effect theme-switch" @click="toggleTheme">
@@ -81,8 +74,6 @@ import HamBurger from './components/HamBurger'
 import BreadCrumb from './components/BreadCrumb'
 import HeaderSearch from './components/HeaderSearch'
 import ScreenFull from './components/Screenfull'
-import SizeSelect from './components/SizeSelect'
-import LangSelect from './components/LangSelect'
 import { emitter } from '@/utils/mitt'
 
 import Logo from '@/layout/components/sidebar/Logo'

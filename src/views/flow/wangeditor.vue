@@ -1,45 +1,28 @@
 <template>
-  <YuLayout title="LogicFlow">
-    <template #head>
-      富文本 wangeditor
-      <el-link
-        type="primary"
-        href="https://www.wangeditor.com/v5/getting-started.html"
-        target="_blank"
-        underline="never"
-        >点我查看更多</el-link
-      >
-    </template>
-    <template #body>
-      <div class="app-container">
-        <el-card class="box-card">
-          <template #header>
-            <div class="card-header">
-              <Toolbar
-                style="border-bottom: 1px solid #ccc"
-                :editor="editorRef"
-                :defaultConfig="toolbarConfig"
-                :mode="mode"
-              />
-              <Editor
-                style="height: 500px; overflow-y: hidden"
-                v-model="valueHtml"
-                :defaultConfig="editorConfig"
-                :mode="mode"
-                @onCreated="handleCreated"
-              />
-            </div>
-          </template>
-          <div id="vditor" />
-        </el-card>
-      </div>
-    </template>
-  </YuLayout>
+  <EditorShowcase
+    title="富文本编辑器 - WangEditor"
+    subtitle="wangEditor 是一款开源 Web 富文本编辑器，支持常见的文本编辑能力与自定义菜单，体积小、上手快。"
+    doc-link="https://www.wangeditor.com/v5/getting-started.html"
+    doc-text="使用文档"
+    panel-title="WangEditor"
+  >
+    <div class="wangeditor-box">
+      <Toolbar class="wangeditor-toolbar" :editor="editorRef" :defaultConfig="toolbarConfig" :mode="mode" />
+      <Editor
+        class="wangeditor-content"
+        :style="{ height: 'var(--wangeditor-height, 500px)' }"
+        v-model="valueHtml"
+        :defaultConfig="editorConfig"
+        :mode="mode"
+        @onCreated="handleCreated"
+      />
+    </div>
+  </EditorShowcase>
 </template>
 
 <script setup>
 import { ref, onMounted, shallowRef, onBeforeUnmount } from 'vue'
-import YuLayout from '@/components/YuLayout'
+import EditorShowcase from './components/EditorShowcase.vue'
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 
@@ -76,3 +59,33 @@ defineOptions( {
   name : 'Wangeditor'
 } )
 </script>
+
+<style lang="scss" scoped>
+.wangeditor-box {
+  --wangeditor-height: 500px;
+  width: 100%;
+  max-width: 100%;
+  border: 1px solid var(--app-border-color-light);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.wangeditor-toolbar {
+  border-bottom: 1px solid var(--app-border-color-light);
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.wangeditor-content {
+  width: 100%;
+  max-width: 100%;
+  overflow-y: hidden;
+  background: var(--app-panel-bg);
+}
+
+@media (max-width: 767px) {
+  .wangeditor-box {
+    --wangeditor-height: 360px;
+  }
+}
+</style>

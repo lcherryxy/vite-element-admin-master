@@ -20,6 +20,9 @@ const useUserStore = defineStore('users', {
     phone: '15988888888',
     email: 'admin@contentstudio.local',
     identity: '',
+    gender: '保密',
+    birthday: '',
+    bio: '',
     roles: []
   }),
   actions: {
@@ -47,6 +50,22 @@ const useUserStore = defineStore('users', {
       }
       throw new Error(`getInfo failed with code: ${code}`)
     },
+    // 绑定 / 更换手机号
+    updatePhone(phone = '') {
+      this.phone = phone
+    },
+    // 绑定 / 更换邮箱
+    updateEmail(email = '') {
+      this.email = email
+    },
+    // 完善个人信息：昵称、性别、生日、简介
+    updateProfile(payload = {}) {
+      Object.assign(this, payload)
+    },
+    // 实名认证：保存实名信息（{ name, idNumber }），卡片据此显示已认证
+    updateIdentity(identity = '') {
+      this.identity = identity
+    },
     // axios：POST 请求，调用后端登出接口
     async loginOut() {
       try {
@@ -58,6 +77,9 @@ const useUserStore = defineStore('users', {
           this.phone = ''
           this.email = ''
           this.identity = ''
+          this.gender = '保密'
+          this.birthday = ''
+          this.bio = ''
           this.roles = []
           this.resetInfo()
         }

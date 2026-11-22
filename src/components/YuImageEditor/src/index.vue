@@ -1,9 +1,11 @@
 <template>
-  <div id="tui-image-editor" ref="editorEl" />
+  <div ref="wrapperEl" class="tui-editor-wrapper" :style="wrapperStyle">
+    <div id="tui-image-editor" ref="editorEl" :style="editorStyle" />
+  </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import 'tui-image-editor/dist/tui-image-editor.css'
 import 'tui-color-picker/dist/tui-color-picker.css'
 import ImageEditor from 'tui-image-editor'
@@ -66,10 +68,36 @@ const props = defineProps( {
 } )
 
 const editorEl = ref()
+const wrapperEl = ref()
 const instance = ref( null )
+// 容器不足 1000px 时按比例整体缩放，保证工具栏与按钮不重叠
+const scale = ref( 1 )
+const uiHeight = ref( 700 )
+
+const wrapperStyle = computed( () => {
+  if ( scale.value >= 1 ) return {}
+  return {
+    height : `${uiHeight.value * scale.value}px`,
+    overflow : 'hidden'
+  }
+} )
+
+const editorStyle = computed( () => {
+  if ( scale.value >= 1 ) return { margin : '0 auto' }
+  return {
+    transform : `scale(${scale.value})`,
+    transformOrigin : 'top left'
+  }
+} )
 
 onMounted( () => {
   const el = editorEl.value
+  // TUI 编辑器宽度低于 1000px 时顶部工具条会与右侧按钮重叠，因此按 1000px 渲染后整体缩放贴合容器
+  const containerWidth = wrapperEl.value?.clientWidth || 1000
+  const uiWidth = Math.min( Math.max( containerWidth, 1000 ), 1200 )
+  // 手机等极窄屏幕不做缩放，保持 1000px 由内部横向滚动查看
+  scale.value = containerWidth >= 640 ? Math.min( 1, containerWidth / uiWidth ) : 1
+  uiHeight.value = parseFloat( props.uiSize.height ) || 700
   const options = {
     usageStatistics : false,
     includeUI : {
@@ -79,7 +107,7 @@ onMounted( () => {
       },
       // 操作菜单栏
       menu : props.menu,
-      uiSize : props.uiSize,
+      uiSize : { ...props.uiSize, width : `${uiWidth}px` },
       menuBarPosition : props.menuBarPosition, // 操作栏位置
       locale : locale_zh, // 语言
       theme : customTheme, // 主题样式
@@ -126,6 +154,16 @@ defineOptions( {
 </script>
 
 <style lang="scss" scoped>
+.tui-editor-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* 帮助工具栏固定 506px 居中，编辑区较窄时会与右上角“替换图片/预览图片”按钮重叠，整体左移避开 */
+.tui-editor-wrapper :deep(.tui-image-editor-help-menu.top) {
+  left: calc(50% - 40px);
+}
+
 .tui-image-editor-submenu-item > li > .tui-image-editor-button > div > .tie-mask-image-file {
   display: block !important;
 }

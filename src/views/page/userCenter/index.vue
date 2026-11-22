@@ -40,7 +40,7 @@
               </div>
             </div>
           </div>
-          <el-button v-if="!set.identity" class="btn" type="info" @click="bindHandle(2)">去认证</el-button>
+          <el-button class="btn" type="info" @click="bindHandle(2)">{{ set.identity ? '查看认证' : '去认证' }}</el-button>
         </div>
         <!--绑定邮箱-->
         <div class="card green">
@@ -51,7 +51,7 @@
             <div class="tips-info flex-column flex-vertical-center">
               <div class="f1">
                 绑定邮箱
-                <CircleCheck v-if="set.phone" class="status-ok" />
+                <CircleCheck v-if="set.email" class="status-ok" />
                 <Warning v-else class="status-warning" />
               </div>
               <div class="f2">
@@ -78,12 +78,12 @@
               </div>
             </div>
           </div>
-          <el-button class="btn" type="info" v-if="!set.isPerfect" @click="bindHandle(4)">去完善</el-button>
+          <el-button class="btn" type="info" @click="bindHandle(4)">{{ set.isPerfect ? '更改信息' : '去完善' }}</el-button>
         </div>
       </div>
 
       <!-- 登录历史 -->
-      <div class="card-section" v-loading="loading">
+      <div class="card-section" ref="historySection" v-loading="loading">
         <div class="login-title flex-row flex-between flex-vertical-center">
           <el-tooltip class="box-item" effect="dark" content="此处模拟了10W条数据" placement="top-start">
             <span class="title">登录历史</span></el-tooltip
@@ -98,10 +98,15 @@
           class="login-history-table"
           :columns="columns"
           :data="tableData"
-          :width="910"
+          :width="historyTableWidth"
           :height="210"
           :fixed="false"
-        />
+        >
+          <!-- 自定义空状态：默认 ElEmpty 插画过大，会在卡片内溢出 -->
+          <template #empty>
+            <div class="table-empty">暂无数据</div>
+          </template>
+        </el-table-v2>
 
         <!-- Element 基础table -->
         <!--<el-table
@@ -150,35 +155,49 @@
           </el-table-column>
         </el-table>-->
       </div>
-
-      <!--  -->
-      <div class="card-section" style="height: 330px" />
     </div>
     <!--  -->
     <div class="avatar-box flex-column flex-level-center flex-vertical-center">
-      <YuThumb width="150px" height="150px" :image="set.avatar">内容工坊</YuThumb>
+      <YuThumb
+        width="clamp(96px, 30vw, 150px)"
+        height="clamp(96px, 30vw, 150px)"
+        :image="set.avatar"
+      >内容工坊</YuThumb>
       <span class="user-name ellipsis"> Hi,{{ set.name || '内容工坊用户' }} </span>
       <span class="phone">
         <span v-if="set.phone">{{ encryptionPhone(set.phone) }}</span>
         <span v-else> 你还未绑定手机 </span>
       </span>
     </div>
+
+    <!-- 绑定 / 更换手机号、绑定 / 更换邮箱 -->
+    <BindAccountDialog v-model="bindVisible" :type="bindType" />
+    <!-- 完善个人信息 -->
+    <ProfileDialog v-model="profileVisible" />
   </div>
 </template>
 
 <script setup lang="jsx">
 import { ref, reactive, computed } from 'vue'
+import { useElementSize } from '@vueuse/core'
 import { useUserStore } from '@/store'
 import { loginHistory } from '@/api/user'
 import { encryptionPhone } from '@/utils'
 import { useRouter } from 'vue-router'
-// Element Plus：保存个人资料后用 ElMessage 提示
-import { ElMessage } from 'element-plus'
 import YuThumb from '@/components/YuThumb'
+import BindAccountDialog from './components/BindAccountDialog.vue'
+import ProfileDialog from './components/ProfileDialog.vue'
 
 const router = useRouter()
 
 const loading = ref( false )
+
+// 虚拟表格宽度跟随卡片容器，窄屏时不再撑破页面（列超出时表格内部横向滚动）
+const historySection = ref( null )
+const { width: historySectionWidth } = useElementSize( historySection )
+const historyTableWidth = computed( () => historySectionWidth.value
+  ? Math.max( historySectionWidth.value - 4, 320 )
+  : 880 )
 
 const userStore = useUserStore()
 
@@ -206,7 +225,8 @@ const set = reactive( {
     return userStore.identity
   } ),
   isPerfect : computed( () => {
-    return userStore.avatar && userStore.name && userStore.phone && userStore.email && userStore.identity
+    // 个人信息完善度只看资料本身，手机 / 邮箱 / 实名由各自卡片单独提示
+    return !!( userStore.avatar && userStore.name && userStore.gender && userStore.birthday )
   } )
 } )
 
@@ -275,12 +295,23 @@ const getHistory = async() => {
 getHistory()
 
 // 1 绑定手机, 2 实名认证, 3 绑定邮箱, 4 完善个人信息
-const bindHandle = async step => {
-  if ( step != 2 ) {
-    ElMessage( {
-      message : '此组件还未开发',
-      type : 'warning'
-    } )
+const bindVisible = ref( false )
+const bindType = ref( 'phone' )
+const profileVisible = ref( false )
+
+const bindHandle = step => {
+  if ( step === 1 ) {
+    bindType.value = 'phone'
+    bindVisible.value = true
+    return
+  }
+  if ( step === 3 ) {
+    bindType.value = 'email'
+    bindVisible.value = true
+    return
+  }
+  if ( step === 4 ) {
+    profileVisible.value = true
     return
   }
   router.push( '/user/attestation' )
@@ -294,19 +325,33 @@ defineOptions( {
 <style lang="scss" scoped>
 .account-container {
   padding: 20px;
+  /* 空间不足时右侧资料卡换行，避免整个页面横向溢出 */
+  flex-wrap: wrap;
+  align-items: flex-start;
+  row-gap: 10px;
 }
 .center-box {
-  min-width: 920px;
+  flex: 1 1 920px;
+  min-width: 0;
   margin-right: 10px;
+
+  /* 状态卡片行：放不下时自动换行，用 gap 统一间距，换行后左边界仍对齐 */
+  > .flex-row {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
   .card {
     padding: 20px 0 0 20px;
     background: var(--app-panel-bg);
-    width: 222px;
+    /* 四张卡片等分整行，随内容区宽度自适应，始终与下方卡片左右对齐 */
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
     height: 134px;
     border-radius: 10px;
     box-shadow: 0 4px 6px 0 rgba(152, 160, 179, 0.13);
     box-sizing: border-box;
-    margin-left: 10px;
     .circle {
       display: flex;
       align-items: center;
@@ -363,9 +408,6 @@ defineOptions( {
       border: none;
     }
 
-    &:first-child {
-      margin-left: 0;
-    }
     &.purple {
       .circle {
         background-color: #b260ea;
@@ -408,7 +450,7 @@ defineOptions( {
 .card-section {
   background: var(--app-panel-bg);
   margin-top: 10px;
-  width: 920px;
+  width: 100%;
   height: 315px;
   border-radius: 10px;
   box-shadow: 0 4px 6px 0 rgba(152, 160, 179, 0.13);
@@ -434,18 +476,23 @@ defineOptions( {
 
 .login-history-table {
   margin: 0 auto;
-  ::v-deep(.el-table-v2__empty) {
-    .el-empty__image {
-      width: 80px;
-    }
+  :deep(.el-table-v2__row-cell) {
+    color: var(--app-text-secondary);
   }
-  ::v-deep(.el-table-v2__row-cell) {
-    color: #606266;
-  }
+}
+.table-empty {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--app-text-secondary);
 }
 
 .avatar-box {
   background: var(--app-panel-bg);
+  box-sizing: border-box;
+  flex: 0 0 250px;
   min-width: 250px;
   height: 315px;
   border-radius: 10px;
@@ -456,11 +503,106 @@ defineOptions( {
     color: rgba(104, 114, 132, 1);
     font-size: 20px;
     width: 200px;
+    max-width: 100%;
   }
   .phone {
     color: rgba(166, 179, 202, 1);
     font-size: 16px;
     text-align: left;
+    max-width: 100%;
+  }
+}
+
+/* 窄桌面 / 平板：单列堆叠，资料卡改为横向通栏，避免孤零零悬浮 */
+@media (max-width: 1439px) {
+  .account-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .center-box {
+    flex: none;
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .avatar-box {
+    flex: none;
+    width: 100%;
+    height: auto;
+    padding: 20px 16px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px 24px;
+
+    .user-name {
+      margin: 0;
+      width: auto;
+      max-width: 100%;
+      white-space: normal;
+      word-break: break-all;
+    }
+
+    .phone {
+      text-align: center;
+    }
+  }
+}
+
+/* 平板：状态卡片两列，仍铺满整行 */
+@media (max-width: 991px) {
+  .center-box .card {
+    flex: 1 1 calc(50% - 5px);
+  }
+}
+
+/* 手机端：收窄留白，卡片保持两列 */
+@media (max-width: 767px) {
+  .account-container {
+    padding: 10px;
+  }
+
+  .center-box {
+    > .flex-row {
+      justify-content: center;
+    }
+  }
+
+  .card-section {
+    height: auto;
+  }
+
+  .login-title {
+    flex-wrap: wrap;
+    row-gap: 6px;
+  }
+
+  /* 头像与文字改为纵向排列，头像随屏幕宽度缩放，避免互相挤压错位 */
+  .avatar-box {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+
+    .user-name {
+      font-size: 17px;
+      line-height: 1.5;
+      white-space: normal;
+      word-break: break-all;
+    }
+
+    .phone {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+  }
+}
+
+/* 仅超窄屏才单列：平板和窄窗口保持两列，避免一张卡片占满一行 */
+@media (max-width: 560px) {
+  .center-box .card {
+    flex: 1 1 100%;
+    width: auto;
   }
 }
 </style>

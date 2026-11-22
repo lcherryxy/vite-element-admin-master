@@ -5,7 +5,8 @@
 <script setup>
 // ECharts：init 容器后 setOption 画柱状图
 import * as echarts from 'echarts'
-import { ref, nextTick, onMounted, onBeforeUnmount } from 'vue'
+import { shallowRef, ref, nextTick, onMounted, onBeforeUnmount } from 'vue'
+import { useResizeObserver, useDebounceFn } from '@vueuse/core'
 
 const animationDuration = 6000
 const props = defineProps( {
@@ -23,8 +24,14 @@ const props = defineProps( {
   }
 } )
 
-const chart = ref( null )
+// ECharts 实例必须用 shallowRef，深层响应式代理会影响 resize()
+const chart = shallowRef( null )
 const container = ref( null )
+
+// 容器尺寸变化（窗口缩放、侧边栏折叠、设备档位切换）时自动重绘
+useResizeObserver( container, useDebounceFn( () => {
+  chart.value && chart.value.resize()
+}, 100 ) )
 
 const initChart = () => {
   chart.value = echarts.init( container.value )

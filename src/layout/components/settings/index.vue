@@ -39,7 +39,6 @@
             <el-radio-group v-model="set.themeMode" size="small">
               <el-radio-button value="light">亮色</el-radio-button>
               <el-radio-button value="dark">暗色</el-radio-button>
-              <el-radio-button value="auto">跟随系统</el-radio-button>
             </el-radio-group>
           </div>
 

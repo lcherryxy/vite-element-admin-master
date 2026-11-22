@@ -14,7 +14,7 @@
         </el-col>
         <el-col :span="10">
           <div class="icon">
-            <svg-icon icon-class="Drizzling" class-name="panel-icon" />
+            <Drizzling class="panel-icon" />
           </div>
         </el-col>
       </el-row>
@@ -46,46 +46,29 @@
     </table>
 
     <div class="week-weather">
-      <el-carousel :interval="2000" arrow="never">
-        <el-carousel-item>
-          <ul class="days-list">
-            <li class="day">
-              <p>Monday</p>
-              <svg-icon icon-class="Cloudy" class-name="panel-icon" />
-            </li>
-            <li class="day">
-              <p>Tuesday</p>
-              <svg-icon icon-class="MostlyCloudy" class-name="panel-icon" />
-            </li>
-            <li class="day">
-              <p>Wednesday</p>
-              <svg-icon icon-class="Sunny" class-name="panel-icon" />
-            </li>
-          </ul>
-        </el-carousel-item>
-
-        <el-carousel-item>
-          <ul class="days-list">
-            <li class="day">
-              <p>Thursday</p>
-              <svg-icon icon-class="WindPower" class-name="panel-icon" />
-            </li>
-            <li class="day">
-              <p>Friday</p>
-              <svg-icon icon-class="MostlyCloudy" class-name="panel-icon" />  
-            </li>
-            <li class="day">
-              <p>Saturday</p>
-              <svg-icon icon-class="Drizzling" class-name="panel-icon" />
-            </li>
-          </ul>
-        </el-carousel-item>
-      </el-carousel>
+      <ul class="days-list">
+        <li v-for="day in weekDays" :key="day.name" class="day">
+          <p>{{ day.name }}</p>
+          <component :is="day.icon" class="panel-icon" />
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script setup>
+import { Cloudy, Drizzling, Sunny, WindPower } from '@element-plus/icons-vue'
+
+const weekDays = [
+  { name : '周一', icon : Cloudy },
+  { name : '周二', icon : Cloudy },
+  { name : '周三', icon : Sunny },
+  { name : '周四', icon : WindPower },
+  { name : '周五', icon : Cloudy },
+  { name : '周六', icon : Drizzling },
+  { name : '周日', icon : Sunny }
+]
+
 defineOptions( {
   name : 'YuWeather'
 } )
@@ -172,32 +155,40 @@ defineOptions( {
 }
 
 .week-weather {
-  height: 120px;
+  padding: 10px 0 18px;
+
   ul,
   li {
     list-style: none;
     padding: 0;
     margin: 0;
   }
+
   .days-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
   }
+
   .day {
-    display: inline-block;
-    width: 30%;
-    margin: 0 1%;
-    padding: 20px 10px;
+    width: 14.28%;
+    min-width: 62px;
+    box-sizing: border-box;
+    padding: 12px 2px;
     text-align: center;
+
     p {
       padding: 0;
-      margin: 0;
-      font-size: 15px;
-      line-height: 24px;
-      height: 24px;
-      margin-bottom: 16px;
+      margin: 0 0 8px;
+      font-size: 13px;
+      line-height: 20px;
+      height: 20px;
+      white-space: nowrap;
     }
+
     .panel-icon {
-      width: 40px;
-      height: 40px;
+      width: 32px;
+      height: 32px;
       color: #343434;
     }
   }

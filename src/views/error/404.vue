@@ -52,6 +52,7 @@ defineOptions( {
 .wscn-http404 {
   position: relative;
   width: 1200px;
+  max-width: 100%;
   padding: 0 50px;
   overflow: hidden;
   .pic-404 {
@@ -233,6 +234,36 @@ defineOptions( {
         opacity: 1;
       }
     }
+  }
+}
+
+/* 平板及以下：改为上下堆叠，避免 1200px 固定宽度溢出 */
+@media (max-width: 991px) {
+  .wscn-http404-container {
+    position: static;
+    transform: none;
+    padding: 60px 16px 0;
+    box-sizing: border-box;
+  }
+
+  .wscn-http404 {
+    padding: 0;
+  }
+
+  .pic-404 {
+    float: none;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .bullshit {
+    float: none;
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto;
+    padding: 20px 0;
+    box-sizing: border-box;
   }
 }
 </style>

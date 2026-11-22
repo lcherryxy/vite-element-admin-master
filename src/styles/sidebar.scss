@@ -212,7 +212,7 @@
   }
 
   .el-menu--collapse .el-menu .el-sub-menu {
-    min-width: $sideBarWidth !important;
+    min-width: 0;
   }
 
   // mobile responsive
@@ -286,22 +286,10 @@
     }
   }
 
-  // the scroll bar appears when the subMenu is too long
+  // 折叠态弹层：不再限制高度和裁剪，否则三级菜单会被裁掉
   >.el-menu--popup {
-    max-height: 100vh;
-    overflow-y: auto;
-
-    &::-webkit-scrollbar-track-piece {
-      background: #d3dce6;
-    }
-
-    &::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: #99a9bf;
-      border-radius: 20px;
-    }
+    min-width: 210px;
+    max-height: none;
+    overflow: visible;
   }
 }

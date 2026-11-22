@@ -102,12 +102,6 @@ export const asyncRoutes = [
     meta: { title: '图表', icon: 'charts' },
     children: [
       {
-        path: 'keyboard',
-        component: () => import('@/views/charts/keyboard.vue'),
-        name: 'KeyboardChart',
-        meta: { title: '键盘图表', noCache: true }
-      },
-      {
         path: 'line',
         component: () => import('@/views/charts/line.vue'),
         name: 'LineChart',
@@ -118,12 +112,6 @@ export const asyncRoutes = [
         component: () => import('@/views/charts/mix-chart.vue'),
         name: 'MixChart',
         meta: { title: '混合图表', noCache: true }
-      },
-      {
-        path: 'line3d',
-        component: () => import('@/views/charts/line3D.vue'),
-        name: 'Line3d',
-        meta: { title: '3D图表', noCache: true }
       }
     ]
   },
@@ -177,32 +165,14 @@ export const asyncRoutes = [
     path: '/table',
     name: 'Table',
     component: Layout,
-    redirect: '/table/dynamic',
+    redirect: '/table/index',
     meta: { title: '表格', icon: 'table', noCache: true },
     children: [
       {
-        path: 'dynamic',
-        component: () => import('@/views/table/dynamic-table/index.vue'),
-        name: 'DynamicTable',
-        meta: { title: '动态表格', noCache: true }
-      },
-      {
-        path: 'drag',
-        component: () => import('@/views/table/drag.vue'),
-        name: 'DragTable',
-        meta: { title: '拖拽表格', noCache: true }
-      },
-      {
-        path: 'edit',
-        component: () => import('@/views/table/editTable.vue'),
-        name: 'EditTable',
-        meta: { title: '可编辑表格', noCache: true }
-      },
-      {
-        path: 'complex',
-        component: () => import('@/views/table/complexTable.vue'),
-        name: 'ComplexTable',
-        meta: { title: '综合表格', noCache: true }
+        path: 'index',
+        component: () => import('@/views/table/index.vue'),
+        name: 'TablePage',
+        meta: { title: '表格', noCache: true }
       }
     ]
   },

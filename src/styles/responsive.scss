@@ -77,8 +77,6 @@
     line-height: 48px;
   }
 
-  #app .navbar .right-menu .size-select,
-  #app .navbar .right-menu .lang-select,
   #app #screenfull {
     display: none;
   }
@@ -161,12 +159,14 @@
     min-height: calc(100vh - 48px);
   }
 
-  /* el-scrollbar 高度在 JS 中按 84/50 计算，手机端头部为 80/48，这里做校正 */
-  #app .main-container.hasTagsView .app-main .el-scrollbar {
+  /* el-scrollbar 高度在 JS 中按 84/50 计算，手机端头部为 80/48，这里做校正。
+     注意必须限定为 app-main 的直接子级，否则会命中 el-table 内部的滚动容器，
+     把表格体撑成整屏高、出现大片空白 */
+  #app .main-container.hasTagsView .app-main > .el-scrollbar {
     height: calc(100vh - 80px) !important;
   }
 
-  #app .main-container:not(.hasTagsView) .app-main .el-scrollbar {
+  #app .main-container:not(.hasTagsView) .app-main > .el-scrollbar {
     height: calc(100vh - 48px) !important;
   }
 
